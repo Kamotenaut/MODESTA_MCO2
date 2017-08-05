@@ -36,14 +36,14 @@ public class Deck {
         if (cardsUsed == 52)
             shuffle();
         cardsUsed++;
-        System.out.println("[Repetition Deck]: " + deck[cardsUsed-1].toString());
+//        System.out.println("[Repetition Deck]: " + deck[cardsUsed-1].toString());
         return deck[cardsUsed - 1];
     }
 
     public Card drawCardReplace() {
         Card temp = deck[0];
         shuffle();
-        System.out.println("[No Repetition Deck]: " +temp.toString());
+//        System.out.println("[No Repetition Deck]: " +temp.toString());
         return temp;
     }
 

@@ -1,38 +1,43 @@
-import org.apache.commons.math3.distribution.BinomialDistribution;
-import org.apache.commons.math3.distribution.HypergeometricDistribution;
-import umontreal.ssj.probdist.BinomialDist;
-import umontreal.ssj.probdist.HypergeometricDist;
-import umontreal.ssj.probdist.NegativeBinomialDist;
-import umontreal.ssj.probdistmulti.MultinomialDist;
-
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.logging.FileHandler;
+import java.util.logging.Logger;
 
 /**
  * Created by Brandon on 7/30/2017.
  */
 public class CardDrawSim {
-    private int numCards, numTrials, currTrial;
+    private int numCards, numTrials, currTrial, userValue, corGuess;
     private ArrayList<Card> cardHandRep, cardHandNoRep;
+    private ArrayList<Integer> cardHandRepValues, cardHandNoRepValues;
     private Deck deckRep, deckNoRep;
+    private Logger logger = Logger.getLogger("MyLog");
+    private FileHandler fh;
+    private RServeConnector rServeConnector;
+
 
     public CardDrawSim(){
         Scanner sc = new Scanner(System.in);
         cardHandRep = new ArrayList<Card>();
         cardHandNoRep = new ArrayList<Card>();
+        cardHandRepValues = new ArrayList<Integer>();
+        cardHandNoRepValues = new ArrayList<Integer>();
         deckRep = new Deck();
         deckRep.shuffle();
         deckNoRep = new Deck();
         deckNoRep.shuffle();
         currTrial = 0;
 
-        System.out.println("Input number of cards on hand: ");
-        numCards = sc.nextInt();
-
         System.out.println("Input number of trials: ");
         numTrials = sc.nextInt();
 
+        System.out.println("Input number of cards on hand: ");
+        numCards = sc.nextInt();
+
+        System.out.println("Input total value: ");
+        userValue = sc.nextInt();
         sc.close();
+        rServeConnector = new RServeConnector();
         run();
     }
 
@@ -42,16 +47,30 @@ public class CardDrawSim {
             DrawCards();
             currTrial++;
         }
-    }
-    public void DrawCards(){
-        for(int i = 0; i<numCards; i++ ){
-            //cardHandNoRep.add(deckNoRep.drawCard());
-            cardHandRep.add(deckRep.drawCardReplace());
-        }
+        rServeConnector.graphValuesHist(cardHandNoRepValues,"No Repetitions");
+        rServeConnector.graphValuesHist(cardHandRepValues, "Repetitions");
+        System.out.println("Num of correct trials: " + corGuess);
     }
 
-    //HypergeometricDist or HypergeometricDistribution (Apache)
-    //BinomialDist or BinomialDistribution (Apache)
-    //MultinomialDist
-    //NegativeBinomialDist
+    public void DrawCards(){
+        int sumRep = 0, sumNRoRep = 0;
+        Card cardRep, cardNoRep;
+
+        for(int i = 0; i<numCards; i++ ){
+            cardNoRep = deckNoRep.drawCard();
+            cardRep = deckRep.drawCardReplace();
+            cardHandNoRep.add(cardNoRep);
+            cardHandRep.add(cardRep);
+            sumNRoRep += cardNoRep.getValue();
+            sumRep += cardRep.getValue();
+        }
+        System.out.println("Total value of Drawing without Rep: " + sumNRoRep);
+        System.out.println("Total value of Drawing with Rep: " + sumRep);
+        if(sumNRoRep==userValue)
+            corGuess++;
+        else if(sumRep==userValue)
+            corGuess++;
+        cardHandNoRepValues.add(sumNRoRep);
+        cardHandRepValues.add(sumRep);
+    }
 }
