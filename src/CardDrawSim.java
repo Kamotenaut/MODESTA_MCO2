@@ -15,6 +15,8 @@ public class CardDrawSim {
     private FileHandler fh;
     private RServeConnector rServeConnector;
 
+    private int correctCombinations = 0;
+
     public CardDrawSim(){
         Scanner sc = new Scanner(System.in);
         cardHandRep = new ArrayList<Card>();
@@ -37,6 +39,13 @@ public class CardDrawSim {
         userValue = sc.nextInt();
         sc.close();
         rServeConnector = new RServeConnector();
+
+        // Print all combinations & get all correct combinations out of all of them.
+        printCombination(13, numCards);
+
+        //Get Probability of Getting either or of all correct values in a deck
+        getProbabilityOfCorrectValue();
+
         run();
     }
 
@@ -73,5 +82,80 @@ public class CardDrawSim {
             corGuess++;
         cardHandNoRepValues.add(sumNRoRep);
         cardHandRepValues.add(sumRep);
+    }
+
+
+    public void getProbabilityOfCorrectValue(){
+        // TODO: Please migrate this to a separate file / class / chuchu. Thank you -Dyan
+        /*
+        * This is code for getting probability of correct hand in ONE trial. Thanks.
+        *
+         */
+        float correct = 0;
+        float actualProbabilityNoRep = 0;
+        float actualProbabilityRep = 0;
+
+        System.out.println("Correct Combinations: " + correctCombinations);
+        System.out.println("Combinations: " + rServeConnector.doCombinationsNoRep(13, numCards));
+        actualProbabilityNoRep = ((float)1/(float)(rServeConnector.doCombinationsNoRep(13, numCards))) * correctCombinations;
+        actualProbabilityRep = ((float)1/(float)(rServeConnector.doCombinationsRep(13, numCards))) * correctCombinations;
+
+        System.out.println("Actual Probability of Correct Hand Without Rep: " + String.format("%.5f", (float)actualProbabilityNoRep));
+        System.out.println("Actual Probability of Correct Hand With Rep: " + String.format("%.5f", (float)actualProbabilityRep));
+    }
+
+
+    //TODO: Obtained from http://www.geeksforgeeks.org/print-all-possible-combinations-of-r-elements-in-a-given-array-of-size-n/
+    // The main function that prints all combinations of size r
+    // in arr[] of size n. This function mainly uses combinationUtil()
+    public void printCombination(int n, int r)
+    {
+        // A temporary array to store all combination one by one
+        int[] data = new int[r];
+        int[] arr = new int[n];
+
+        for(int i=0; i<n; i++){
+            arr[i] = (i+1);
+        }
+
+        // Print all combination using te2mprary array 'data[]'
+        combinationUtil(arr, data, 0, n+r-3, 0, r);
+    }
+
+    /* arr[]  ---> Input Array
+       data[] ---> Temporary array to store current combination
+       start & end ---> Staring and Ending indexes in arr[]
+       index  ---> Current index in data[]
+       r ---> Size of a combination to be printed */
+    public void combinationUtil(int arr[], int data[], int start, int end,
+                                int index, int r)
+    {
+        // Current combination is ready to be printed, print it
+        if (index == r)
+        {
+            int sum = 0;
+            for (int j=0; j<r; j++){
+                sum += data[j];
+            }
+            if(sum == userValue){
+                System.out.print("$$$$ Correct Value : " );
+                for(int i=0; i<r; i++)
+                    System.out.print(data[i] + " ");
+                System.out.println();
+                correctCombinations ++;
+            }
+
+            return;
+        }
+
+        // replace index with all possible elements. The condition
+        // "end-i+1 >= r-index" makes sure that including one element
+        // at index will make a combination with remaining elements
+        // at remaining positions
+        for (int i=start; i<=end && end-i+1 >= r-index; i++)
+        {
+            data[index] = arr[i];
+            combinationUtil(arr, data, i, end, index+1, r);
+        }
     }
 }
