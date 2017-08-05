@@ -15,7 +15,6 @@ public class CardDrawSim {
     private FileHandler fh;
     private RServeConnector rServeConnector;
 
-
     public CardDrawSim(){
         Scanner sc = new Scanner(System.in);
         cardHandRep = new ArrayList<Card>();
@@ -47,8 +46,10 @@ public class CardDrawSim {
             DrawCards();
             currTrial++;
         }
-        rServeConnector.graphValuesHist(cardHandNoRepValues,"No Repetitions");
-        rServeConnector.graphValuesHist(cardHandRepValues, "Repetitions");
+        rServeConnector.graphValuesHist(cardHandNoRepValues,"Histogram of Actual Results (No Repetitions)");
+        rServeConnector.graphValuesHist(cardHandRepValues, "Histogram of Actual Results Repetitions");
+        rServeConnector.graphValuesScatterPlot(cardHandNoRepValues,"Scatterplot of Actual Results (No Repetitions)" );
+        rServeConnector.graphValuesScatterPlot(cardHandRepValues,"Scatterplot of Actual Results (Repetitions)" );
         System.out.println("Num of correct trials: " + corGuess);
     }
 
