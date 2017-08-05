@@ -90,6 +90,8 @@ public class GUI {
 
                 System.out.println(numTrials + " " + numCards + " " + numSearchValue + " " + withReplace);
 
+                // Print on csv file
+
                 // Changing content of table
                 // DBINOM - resultModel.setValueAt(<int result>, 0, 0);
                 // NBINOM - resultModel.setValueAt(<int result>, 0, 1);
