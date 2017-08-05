@@ -1,6 +1,8 @@
 /**
  * Created by jasonsapdos on 05/08/2017.
  */
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
@@ -48,6 +50,14 @@ public class CSVWriter extends Writer
         try
         {
             csvWriter = new FileWriter(fileName);
+
+            BufferedReader br = null;
+            br = new BufferedReader(new FileReader(fileName));
+            String line;
+
+            while((line = br.readLine()) != null) {
+                System.out.println("Checking CSV line...");
+            }
 
             csvWriter.append(formattedData);
 

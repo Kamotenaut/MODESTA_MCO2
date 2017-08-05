@@ -4,6 +4,18 @@
 
 public abstract class Writer
 {
+    public void saveColumnNamesToDataset(String filename){
+        writeRow(filename, "numTrials," +
+                "numCards," +
+                "withReplace," +
+                "searchSum," +
+                "binom," +
+                "nbinom," +
+                "hyper," +
+                "multinom," +
+                "actual");
+    }
+
     public void saveRowToDataset(String fileName, Object[] tableRow)
     {
         writeRow(fileName, format(tableRow));
