@@ -18,8 +18,7 @@ public class CardDrawSim {
     private int correctCombinationsWRep = 0;
     private int correctCombinationsWORep = 0;
 
-    public CardDrawSim(){
-        Scanner sc = new Scanner(System.in);
+    public CardDrawSim(int numTrials, int numCards, int userValue){
         cardHandRep = new ArrayList<Card>();
         cardHandNoRep = new ArrayList<Card>();
         cardHandRepValues = new ArrayList<Integer>();
@@ -30,23 +29,22 @@ public class CardDrawSim {
         deckNoRep.shuffle();
         currTrial = 0;
 
-        System.out.println("Input number of trials: ");
-        numTrials = sc.nextInt();
+        this.numTrials = numTrials;
+        this.numCards = numCards;
+        this.userValue = userValue;
 
-        System.out.println("Input number of cards on hand: ");
-        numCards = sc.nextInt();
-
-        System.out.println("Input total value: ");
-        userValue = sc.nextInt();
-        sc.close();
         rServeConnector = new RServeConnector();
 
         // Print all combinations & get all correct combinations out of all of them.
-        printCombination(13, numCards);
+        //printCombination(13, numCards);
 
         //Get Probability of Getting either or of all correct values in a deck
-        getProbabilityOfCorrectValue();
+        //getProbabilityOfCorrectValue();
 
+        System.out.println(rServeConnector.doDBinom(1,1,0.2));
+        System.out.println(rServeConnector.doDHyper(1,1,1,1));
+        System.out.println(rServeConnector.doDNBinom(1,1,0.2));
+        //System.out.println(rServeConnector.doDMultinom());
         run();
     }
 
@@ -56,11 +54,11 @@ public class CardDrawSim {
             DrawCards();
             currTrial++;
         }
-        rServeConnector.graphValuesHist(cardHandNoRepValues,"Histogram of Actual Results (No Repetitions)");
+        /*rServeConnector.graphValuesHist(cardHandNoRepValues,"Histogram of Actual Results (No Repetitions)");
         rServeConnector.graphValuesHist(cardHandRepValues, "Histogram of Actual Results Repetitions");
         rServeConnector.graphValuesScatterPlot(cardHandNoRepValues,"Scatterplot of Actual Results (No Repetitions)" );
         rServeConnector.graphValuesScatterPlot(cardHandRepValues,"Scatterplot of Actual Results (Repetitions)" );
-        System.out.println("Num of correct trials: " + corGuess);
+        System.out.println("Num of correct trials: " + corGuess);*/
     }
 
     public void DrawCards(){

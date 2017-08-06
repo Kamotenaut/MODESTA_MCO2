@@ -4,7 +4,9 @@ import org.rosuda.REngine.Rserve.RConnection;
 import org.rosuda.REngine.Rserve.RserveException;
 
 import java.io.File;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.ListIterator;
 
 /**
@@ -165,6 +167,102 @@ public class RServeConnector {
         }
         imageCount++;
         return sum;
+    }
+    public double doDBinom(int n, int size, double prob){
+        connection = null;
+        double result = 0;
+        try {
+            connection = new RConnection();
+            result = connection.eval("dbinom("+n+",size="+size+",prob="+prob+")").asDouble();
+        } catch (RserveException e) {
+            e.printStackTrace();
+        } catch (REXPMismatchException e) {
+            e.printStackTrace();
+        } finally{
+            connection.close();
+        }
+        imageCount++;
+        return result;
+    }
+
+    public List<Integer> doRBinom(int n, int size, double prob){
+        connection = null;
+        List<Integer> result = new ArrayList<Integer>();
+        try {
+            connection = new RConnection();
+            result = connection.eval("rbinom("+n+",size="+size+",prob="+prob+")").asList();
+        } catch (RserveException e) {
+            e.printStackTrace();
+        } catch (REXPMismatchException e) {
+            e.printStackTrace();
+        } finally{
+            connection.close();
+        }
+        imageCount++;
+        return result;
+    }
+
+    public double doDNBinom(int n, int size, double prob) {
+        connection = null;
+        double result = 0;
+        try {
+            connection = new RConnection();
+            result = connection.eval("dnbinom(" + n + ",size=" + size + ",prob=" + prob + ")").asDouble();
+        } catch (RserveException e) {
+            e.printStackTrace();
+        } catch (REXPMismatchException e) {
+            e.printStackTrace();
+        } finally {
+            connection.close();
+        }
+        imageCount++;
+        return result;
+    }
+
+    public double doDHyper(int n, int success, int failure, int size){
+        connection = null;
+        double result = 0;
+        try {
+            connection = new RConnection();
+            result = connection.eval("dhyper(" + n + ","+ success + ","+ failure +"," + size + ")").asDouble();
+        } catch (RserveException e) {
+            e.printStackTrace();
+        } catch (REXPMismatchException e) {
+            e.printStackTrace();
+        } finally {
+            connection.close();
+        }
+        imageCount++;
+        return result;
+    }
+
+    public double doDMultinom(ArrayList<Integer> input, ArrayList<Double> prob){
+        connection = null;
+        double result = 0;
+        String inputCode = "c(", probCode = "c(";
+        for(int i = 0; i < input.size(); i++){
+            inputCode += input.get(i);
+            probCode += prob.get(i);
+            if(i<input.size()-1) {
+                inputCode += ",";
+                probCode += ",";
+            } else {
+                inputCode += ")";
+                probCode += ")";
+            }
+        }
+        try {
+            connection = new RConnection();
+            result = connection.eval("dmultinom(" + inputCode + ","+probCode+")").asDouble();
+        } catch (RserveException e) {
+            e.printStackTrace();
+        } catch (REXPMismatchException e) {
+            e.printStackTrace();
+        } finally {
+            connection.close();
+        }
+        imageCount++;
+        return result;
     }
 }
 
