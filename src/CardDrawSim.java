@@ -30,6 +30,8 @@ public class CardDrawSim {
     private ArrayList<ProbRes> perTriWRepProb;
     private ArrayList<ProbRes> perTriWORepProb;
 
+    public String filename = "log.txt";
+
     public CardDrawSim(int numTrials, int numCards, int userValue, boolean withReplacement){
         this.withReplacement = withReplacement;
         cardHandRep = new ArrayList<Card>();
@@ -128,7 +130,7 @@ public class CardDrawSim {
         //idealHyperProbElem = rServeConnector.doDHyper(1,correctCombinationsWORep,totalCombinations-correctCombinationsWORep,1);
 
         ProbRes prob = overAllProb;
-        idealBinomProbElem = rServeConnector.doDBinom(1, numTrials, prob.getProbRep());
+        idealBinomProbElem = rServeConnector.doDBinom(1, numTrials, prob.getProbNoRep());
         idealNBinomProbElem = rServeConnector.doDNBinom(0, 1, prob.getProbNoRep());
         idealHyperProbElem = rServeConnector.doDHyper(1, prob.getCorrectCombinationsWORep(),
                 prob.getTotalCombinations() - prob.getCorrectCombinationsWORep(),
@@ -277,6 +279,10 @@ public class CardDrawSim {
         }catch(Exception e){
 
         }
+    }
+
+    public double getActualProbability(){
+        return actualProbability;
     }
 
     public double getIdealBinomProbElem() {

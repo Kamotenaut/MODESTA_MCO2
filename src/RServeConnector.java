@@ -13,6 +13,10 @@ import java.util.ListIterator;
  * Created by Brandon on 8/5/2017.
  */
 public class RServeConnector {
+
+    TXTWriter writer = new TXTWriter();
+    String filename = "log.txt";
+
     private RConnection connection = null;
     private int imageCount = 0;
     private final String PERM_WITHO_REP = "perm_without_replacement <- function(n, r){return(factorial(n)/factorial(n - r))}";
@@ -27,6 +31,7 @@ public class RServeConnector {
             connection.eval("meanVal=mean(" + vector + ")");
             double mean = connection.eval("meanVal").asDouble();
             System.out.println("[TESTING] The mean of given vector is=" + mean);
+            writer.write(filename, "[TESTING] The mean of given vector is=" + mean +"\n");
             connection.eval(COMBI_WITH_REP);
             connection.eval(PERM_WITHO_REP);
         } catch (RserveException e) {
@@ -170,7 +175,8 @@ public class RServeConnector {
         connection = null;
         try {
             connection = new RConnection();
-            sum = connection.eval("comb_with_replacement("+n+","+r+")").asInteger();
+            sum = connection.eval("choose("+(n+r-1)+","+r+")").asInteger();
+            //sum = connection.eval("comb_with_replacement("+n+","+r+")").asInteger();
         } catch (RserveException e) {
             e.printStackTrace();
         } catch (REXPMismatchException e) {

@@ -90,7 +90,7 @@ public class GUI {
                 resultModel.setValueAt(sim.getIdealNBinomProbElem(),0,1);
                 resultModel.setValueAt(sim.getIdealHyperProbElem(),0,2);
                 resultModel.setValueAt(sim.getIdealMultiProbElem(), 0, 3);
-                resultModel.setValueAt(0.01, 0, 4);
+                resultModel.setValueAt(sim.getActualProbability(), 0, 4);
             }
         });
     }

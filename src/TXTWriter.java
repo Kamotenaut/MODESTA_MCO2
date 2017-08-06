@@ -8,17 +8,16 @@ import java.io.IOException;
 
 import javax.swing.JOptionPane;
 
-public class TXTWriter extends Writer
+public class TXTWriter
 {
 
-    @Override
     public void write(String fileName, String printString)
     {
         FileWriter fileWriter = null;
 
         try
         {
-            fileWriter = new FileWriter(fileName);
+            fileWriter = new FileWriter(fileName, true);
 
             BufferedReader br = null;
             br = new BufferedReader(new FileReader(fileName));
