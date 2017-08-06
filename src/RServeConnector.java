@@ -319,7 +319,8 @@ public class RServeConnector {
         }
         try {
             connection = new RConnection();
-            result = connection.eval("round(dmultinom(" + inputCode + ","+probCode+"),4)").asDouble();
+            System.out.println("round(dmultinom(" + inputCode + ", prob="+probCode+"),4)");
+            result = connection.eval("round(dmultinom(" + inputCode + ", prob="+probCode+"),4)").asDouble();
         } catch (RserveException e) {
             e.printStackTrace();
         } catch (REXPMismatchException e) {
