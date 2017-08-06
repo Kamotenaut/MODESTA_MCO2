@@ -15,7 +15,8 @@ public class CardDrawSim {
     private FileHandler fh;
     private RServeConnector rServeConnector;
 
-    private int correctCombinations = 0;
+    private int correctCombinationsWRep = 0;
+    private int correctCombinationsWORep = 0;
 
     public CardDrawSim(){
         Scanner sc = new Scanner(System.in);
@@ -95,10 +96,10 @@ public class CardDrawSim {
         float actualProbabilityNoRep = 0;
         float actualProbabilityRep = 0;
 
-        System.out.println("Correct Combinations: " + correctCombinations);
-        System.out.println("Combinations: " + rServeConnector.doCombinationsNoRep(13, numCards));
-        actualProbabilityNoRep = ((float)1/(float)(rServeConnector.doCombinationsNoRep(13, numCards))) * correctCombinations;
-        actualProbabilityRep = ((float)1/(float)(rServeConnector.doCombinationsRep(13, numCards))) * correctCombinations;
+        System.out.println("Correct Combinations wo replacement : " + correctCombinationsWORep);
+        System.out.println("Correct Combinations w replacement : " + correctCombinationsWRep);
+        actualProbabilityNoRep = ((float)1/(float)(rServeConnector.doCombinationsNoRep(13, numCards))) * correctCombinationsWORep;
+        actualProbabilityRep = ((float)1/(float)(rServeConnector.doCombinationsRep(13, numCards))) * correctCombinationsWRep;
 
         System.out.println("Actual Probability of Correct Hand Without Rep: " + String.format("%.5f", (float)actualProbabilityNoRep));
         System.out.println("Actual Probability of Correct Hand With Rep: " + String.format("%.5f", (float)actualProbabilityRep));
@@ -130,32 +131,47 @@ public class CardDrawSim {
     public void combinationUtil(int arr[], int data[], int start, int end,
                                 int index, int r)
     {
+
         // Current combination is ready to be printed, print it
-        if (index == r)
+        if (index >= r)
         {
+            int sameNumCtr = 0;
             int sum = 0;
             for (int j=0; j<r; j++){
                 sum += data[j];
             }
+
+
             if(sum == userValue){
                 System.out.print("$$$$ Correct Value : " );
                 for(int i=0; i<r; i++)
                     System.out.print(data[i] + " ");
                 System.out.println();
-                correctCombinations ++;
+                for(int j=0; j<r; j++){
+                    if(j+1 < r)
+                        if(data[j] == data[j+1]){
+                            sameNumCtr ++;
+                        }
+                }
+                System.out.println("Same Num Ctr : " + sameNumCtr);
+                correctCombinationsWRep ++;
+                if(sameNumCtr <= 3)
+                    correctCombinationsWORep ++;
             }
 
             return;
         }
-
         // replace index with all possible elements. The condition
         // "end-i+1 >= r-index" makes sure that including one element
         // at index will make a combination with remaining elements
         // at remaining positions
-        for (int i=start; i<=end && end-i+1 >= r-index; i++)
-        {
-            data[index] = arr[i];
-            combinationUtil(arr, data, i, end, index+1, r);
+        try {
+            for (int i = start; i <= end && end - i + 1 >= r - index; i++) {
+                data[index] = arr[i];
+                combinationUtil(arr, data, i, end, index + 1, r);
+            }
+        }catch(Exception e){
+
         }
     }
 }
