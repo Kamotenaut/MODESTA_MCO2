@@ -1,7 +1,5 @@
 import java.util.ArrayList;
-import java.util.Scanner;
 import java.util.logging.FileHandler;
-import java.util.logging.Logger;
 
 /**
  * Created by Brandon on 7/30/2017.
@@ -11,12 +9,10 @@ public class CardDrawSim {
     private ArrayList<Card> cardHandRep, cardHandNoRep;
     private ArrayList<Integer> cardHandRepValues, cardHandNoRepValues;
     private Deck deckRep, deckNoRep;
-    private Logger logger = Logger.getLogger("MyLog");
     private FileHandler fh;
     private RServeConnector rServeConnector;
 
-    public CardDrawSim(){
-        Scanner sc = new Scanner(System.in);
+    public CardDrawSim(int numTrials, int numCards, int userValue){
         cardHandRep = new ArrayList<Card>();
         cardHandNoRep = new ArrayList<Card>();
         cardHandRepValues = new ArrayList<Integer>();
@@ -27,29 +23,25 @@ public class CardDrawSim {
         deckNoRep.shuffle();
         currTrial = 0;
 
-        System.out.println("Input number of trials: ");
-        numTrials = sc.nextInt();
+        this.numTrials = numTrials;
+        this.numCards = numCards;
+        this.userValue = userValue;
 
-        System.out.println("Input number of cards on hand: ");
-        numCards = sc.nextInt();
-
-        System.out.println("Input total value: ");
-        userValue = sc.nextInt();
-        sc.close();
         rServeConnector = new RServeConnector();
         run();
     }
 
-    public void run(){
-        while(currTrial<numTrials){
-            System.out.println("Trial #" + (currTrial+1));
+    public void run() {
+        while (currTrial < numTrials) {
+            System.out.println("Trial #" + (currTrial + 1));
             DrawCards();
             currTrial++;
         }
-        rServeConnector.graphValuesHist(cardHandNoRepValues,"Histogram of Actual Results (No Repetitions)");
+        int[] used = {0,0,0,0,0,0,0,0,0,0,0,0,0};
+        /*rServeConnector.graphValuesHist(cardHandNoRepValues,"Histogram of Actual Results (No Repetitions)");
         rServeConnector.graphValuesHist(cardHandRepValues, "Histogram of Actual Results Repetitions");
         rServeConnector.graphValuesScatterPlot(cardHandNoRepValues,"Scatterplot of Actual Results (No Repetitions)" );
-        rServeConnector.graphValuesScatterPlot(cardHandRepValues,"Scatterplot of Actual Results (Repetitions)" );
+        rServeConnector.graphValuesScatterPlot(cardHandRepValues,"Scatterplot of Actual Results (Repetitions)" );*/
         System.out.println("Num of correct trials: " + corGuess);
     }
 
