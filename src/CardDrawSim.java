@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.Scanner;
 import java.util.logging.FileHandler;
 import java.util.logging.Logger;
 
@@ -14,15 +13,24 @@ public class CardDrawSim {
     private Logger logger = Logger.getLogger("MyLog");
     private FileHandler fh;
     private RServeConnector rServeConnector;
-
+    private ArrayList<Double> binomProb, nbinomProb, hyperProb, multiProb;
+    private float idealProbabilityNoRep = 0;
+    private float idealProbabilityRep = 0;
     private int correctCombinationsWRep = 0;
     private int correctCombinationsWORep = 0;
+    private boolean withReplacement;
+    private int totalCombinations = 0;
 
-    public CardDrawSim(int numTrials, int numCards, int userValue){
+    public CardDrawSim(int numTrials, int numCards, int userValue, boolean withReplacement){
+        this.withReplacement = withReplacement;
         cardHandRep = new ArrayList<Card>();
         cardHandNoRep = new ArrayList<Card>();
         cardHandRepValues = new ArrayList<Integer>();
         cardHandNoRepValues = new ArrayList<Integer>();
+        binomProb = new ArrayList<Double>();
+        nbinomProb = new ArrayList<Double>();
+        hyperProb = new ArrayList<Double>();
+        multiProb = new ArrayList<Double>();
         deckRep = new Deck();
         deckRep.shuffle();
         deckNoRep = new Deck();
@@ -36,14 +44,11 @@ public class CardDrawSim {
         rServeConnector = new RServeConnector();
 
         // Print all combinations & get all correct combinations out of all of them.
-        //printCombination(13, numCards);
+        printCombination(13, numCards);
 
         //Get Probability of Getting either or of all correct values in a deck
-        //getProbabilityOfCorrectValue();
+        getProbabilityOfCorrectValue();
 
-        System.out.println(rServeConnector.doDBinom(1,1,0.2));
-        System.out.println(rServeConnector.doDHyper(1,1,1,1));
-        System.out.println(rServeConnector.doDNBinom(1,1,0.2));
         //System.out.println(rServeConnector.doDMultinom());
         run();
     }
@@ -53,12 +58,15 @@ public class CardDrawSim {
             System.out.println("Trial #" + (currTrial+1));
             DrawCards();
             currTrial++;
+            //rServeConnector.doDBinom(1, )
         }
-        /*rServeConnector.graphValuesHist(cardHandNoRepValues,"Histogram of Actual Results (No Repetitions)");
-        rServeConnector.graphValuesHist(cardHandRepValues, "Histogram of Actual Results Repetitions");
-        rServeConnector.graphValuesScatterPlot(cardHandNoRepValues,"Scatterplot of Actual Results (No Repetitions)" );
-        rServeConnector.graphValuesScatterPlot(cardHandRepValues,"Scatterplot of Actual Results (Repetitions)" );
-        System.out.println("Num of correct trials: " + corGuess);*/
+
+        if(withReplacement)
+            graphAllRep();
+        else graphAllNoRep();
+        /*rServeConnector.graphValuesHist(cardHandRepValues, "Histogram of Actual Results Repetitions");
+        rServeConnector.graphValuesScatterPlot(cardHandRepValues,"Scatterplot of Actual Results (Repetitions)" );*/
+        System.out.println("Num of correct trials: " + corGuess);
     }
 
     public void DrawCards(){
@@ -81,8 +89,69 @@ public class CardDrawSim {
             corGuess++;
         cardHandNoRepValues.add(sumNRoRep);
         cardHandRepValues.add(sumRep);
+        if(withReplacement)
+            doAllReplacement();
+        else
+            doAllNoReplacement();
     }
 
+    private void doAllNoReplacement(){
+        binomProb.add(rServeConnector.doDBinom(1, numTrials, idealProbabilityNoRep));
+        nbinomProb.add(rServeConnector.doDNBinom(totalCombinations-correctCombinationsWORep, correctCombinationsWORep, idealProbabilityNoRep));
+        hyperProb.add(rServeConnector.doDHyper(1,correctCombinationsWORep,totalCombinations-correctCombinationsWORep,numCards));
+        //multiProb.add(rServeConnector.doDMultinom());
+    }
+
+    private void graphAllNoRep(){
+        rServeConnector.graphValuesHist(cardHandNoRepValues,"Histogram of Actual Results (No Repetitions)");
+        rServeConnector.graphValuesScatterPlot(cardHandNoRepValues,"Scatterplot of Actual Results (No Repetitions)" );
+        //rServeConnector.graphValuesLineGraph(cardHandNoRepValues,"Line Graph of Actual Results (No Repetitions)" );
+
+        rServeConnector.graphValuesHistProb(binomProb,"Histogram of Binomial Distribution (No Repetitions)");
+        rServeConnector.graphValuesScatterPlotProb(binomProb,"Scatterplot of Binomial Distribution  (No Repetitions)" );
+        //rServeConnector.graphValuesLineGraphProb(binomProb,"Line Graph of Binomial Distribution  (No Repetitions)" );
+
+        rServeConnector.graphValuesHistProb(nbinomProb,"Histogram of Negative Binomial Distribution (No Repetitions)");
+        rServeConnector.graphValuesScatterPlotProb(nbinomProb,"Scatterplot of Negative Binomial Distribution  (No Repetitions)" );
+        //rServeConnector.graphValuesLineGraphProb(nbinomProb,"Line Graph of Negative Binomial Distribution  (No Repetitions)" );
+
+        rServeConnector.graphValuesHistProb(hyperProb,"Histogram of Hypergeometric Distribution (No Repetitions)");
+        rServeConnector.graphValuesScatterPlotProb(hyperProb,"Scatterplot of Hypergeometric Distribution  (No Repetitions)" );
+        //rServeConnector.graphValuesLineGraphProb(hyperProb,"Line Graph of Hypergeometric Distribution  (No Repetitions)" );
+
+        /*rServeConnector.graphValuesHistProb(multiProb,"Histogram of Multinomial Distribution (No Repetitions)");
+        rServeConnector.graphValuesScatterPlotProb(multiProb,"Scatterplot of Multinomial Distribution  (No Repetitions)" );
+        rServeConnector.graphValuesLineGraphProb(multiProb,"Line Graph of Multinomial Distribution  (No Repetitions)" );*/
+    }
+
+    private void doAllReplacement(){
+        binomProb.add(rServeConnector.doDBinom(1, numTrials, idealProbabilityRep));
+        nbinomProb.add(rServeConnector.doDNBinom(totalCombinations-correctCombinationsWRep, correctCombinationsWRep, idealProbabilityRep));
+        hyperProb.add(rServeConnector.doDHyper(1,correctCombinationsWRep,totalCombinations-correctCombinationsWRep,numCards));
+        //multiProb.add(rServeConnector.doDMultinom());
+    }
+
+    private void graphAllRep(){
+        rServeConnector.graphValuesHist(cardHandRepValues,"Histogram of Actual Results (Repetitions)");
+        rServeConnector.graphValuesScatterPlot(cardHandRepValues,"Scatterplot of Actual Results (Repetitions)" );
+        rServeConnector.graphValuesLineGraph(cardHandRepValues,"Line Graph of Actual Results (Repetitions)" );
+
+        rServeConnector.graphValuesHistProb(binomProb,"Histogram of Binomial Distribution (Repetitions)");
+        rServeConnector.graphValuesScatterPlotProb(binomProb,"Scatterplot of Binomial Distribution  (Repetitions)" );
+        rServeConnector.graphValuesLineGraphProb(binomProb,"Line Graph of Binomial Distribution  (Repetitions)" );
+
+        rServeConnector.graphValuesHistProb(nbinomProb,"Histogram of Negative Binomial Distribution (Repetitions)");
+        rServeConnector.graphValuesScatterPlotProb(nbinomProb,"Scatterplot of Negative Binomial Distribution  (Repetitions)" );
+        rServeConnector.graphValuesLineGraphProb(nbinomProb,"Line Graph of Negative Binomial Distribution  (Repetitions)" );
+
+        rServeConnector.graphValuesHistProb(hyperProb,"Histogram of Hypergeometric Distribution (Repetitions)");
+        rServeConnector.graphValuesScatterPlotProb(hyperProb,"Scatterplot of Hypergeometric Distribution  (Repetitions)" );
+        rServeConnector.graphValuesLineGraphProb(hyperProb,"Line Graph of Hypergeometric Distribution  (Repetitions)" );
+
+        /*rServeConnector.graphValuesHistProb(multiProb,"Histogram of Multinomial Distribution (No Repetitions)");
+        rServeConnector.graphValuesScatterPlotProb(multiProb,"Scatterplot of Multinomial Distribution  (No Repetitions)" );
+        rServeConnector.graphValuesLineGraphProb(multiProb,"Line Graph of Multinomial Distribution  (No Repetitions)" );*/
+    }
 
     public void getProbabilityOfCorrectValue(){
         // TODO: Please migrate this to a separate file / class / chuchu. Thank you -Dyan
@@ -91,19 +160,13 @@ public class CardDrawSim {
         *
          */
         float correct = 0;
-        float actualProbabilityNoRep = 0;
-        float actualProbabilityRep = 0;
-
         System.out.println("Correct Combinations wo replacement : " + correctCombinationsWORep);
         System.out.println("Correct Combinations w replacement : " + correctCombinationsWRep);
-        actualProbabilityNoRep = ((float)1/(float)(rServeConnector.doCombinationsNoRep(13, numCards))) * correctCombinationsWORep;
-        actualProbabilityRep = ((float)1/(float)(rServeConnector.doCombinationsRep(13, numCards))) * correctCombinationsWRep;
-
-        System.out.println("Actual Probability of Correct Hand Without Rep: " + String.format("%.5f", (float)actualProbabilityNoRep));
-        System.out.println("Actual Probability of Correct Hand With Rep: " + String.format("%.5f", (float)actualProbabilityRep));
+        idealProbabilityNoRep = ((float)1/(float)(rServeConnector.doCombinationsNoRep(13, numCards))) * correctCombinationsWORep;
+        idealProbabilityRep = ((float)1/(float)(rServeConnector.doCombinationsRep(13, numCards))) * correctCombinationsWRep;
+        System.out.println("Ideal Probability of Correct Hand Without Rep: " + String.format("%.5f", (float) idealProbabilityNoRep));
+        System.out.println("Ideal Probability of Correct Hand With Rep: " + String.format("%.5f", (float) idealProbabilityRep));
     }
-
-
     //TODO: Obtained from http://www.geeksforgeeks.org/print-all-possible-combinations-of-r-elements-in-a-given-array-of-size-n/
     // The main function that prints all combinations of size r
     // in arr[] of size n. This function mainly uses combinationUtil()
@@ -133,6 +196,7 @@ public class CardDrawSim {
         // Current combination is ready to be printed, print it
         if (index >= r)
         {
+            totalCombinations++;
             int sameNumCtr = 0;
             int sum = 0;
             for (int j=0; j<r; j++){

@@ -100,7 +100,7 @@ public class GUI {
                 withReplace = cboxRep.isSelected();
 
                 System.out.println(numTrials + " " + numCards + " " + numSearchValue + " " + withReplace);
-
+                CardDrawSim sim = new CardDrawSim(numTrials,numCards,numSearchValue, withReplace);
                 // Print on csv file
 
                 // Changing content of table
