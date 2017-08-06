@@ -44,7 +44,7 @@ public class CardDrawSim {
         rServeConnector = new RServeConnector();
 
         // Print all combinations & get all correct combinations out of all of them.
-        printCombination(13, numCards);
+        printCombination(13, numCards, userValue);
 
         //Get Probability of Getting either or of all correct values in a deck
         getProbabilityOfCorrectValue();
@@ -83,6 +83,10 @@ public class CardDrawSim {
         }
         System.out.println("Total value of Drawing without Rep: " + sumNRoRep);
         System.out.println("Total value of Drawing with Rep: " + sumRep);
+        System.out.println("Without Rep: ");
+        printCombination(13, numCards, sumNRoRep);
+        System.out.println("With Rep: ");
+        printCombination(13, numCards, sumRep);
         if(sumNRoRep==userValue)
             corGuess++;
         else if(sumRep==userValue)
@@ -170,7 +174,7 @@ public class CardDrawSim {
     //TODO: Obtained from http://www.geeksforgeeks.org/print-all-possible-combinations-of-r-elements-in-a-given-array-of-size-n/
     // The main function that prints all combinations of size r
     // in arr[] of size n. This function mainly uses combinationUtil()
-    public void printCombination(int n, int r)
+    public void printCombination(int n, int r, int desiredValue)
     {
         // A temporary array to store all combination one by one
         int[] data = new int[r];
@@ -181,7 +185,7 @@ public class CardDrawSim {
         }
 
         // Print all combination using te2mprary array 'data[]'
-        combinationUtil(arr, data, 0, n+r-3, 0, r);
+        combinationUtil(arr, data, 0, n+r-3, 0, r, desiredValue);
     }
 
     /* arr[]  ---> Input Array
@@ -190,7 +194,7 @@ public class CardDrawSim {
        index  ---> Current index in data[]
        r ---> Size of a combination to be printed */
     public void combinationUtil(int arr[], int data[], int start, int end,
-                                int index, int r)
+                                int index, int r, int desiredValue)
     {
 
         // Current combination is ready to be printed, print it
@@ -203,8 +207,7 @@ public class CardDrawSim {
                 sum += data[j];
             }
 
-
-            if(sum == userValue){
+            if(sum == desiredValue){
                 System.out.print("$$$$ Correct Value : " );
                 for(int i=0; i<r; i++)
                     System.out.print(data[i] + " ");
@@ -215,7 +218,7 @@ public class CardDrawSim {
                             sameNumCtr ++;
                         }
                 }
-                System.out.println("Same Num Ctr : " + sameNumCtr);
+                //System.out.println("Same Num Ctr : " + sameNumCtr);
                 correctCombinationsWRep ++;
                 if(sameNumCtr <= 3)
                     correctCombinationsWORep ++;
@@ -230,7 +233,7 @@ public class CardDrawSim {
         try {
             for (int i = start; i <= end && end - i + 1 >= r - index; i++) {
                 data[index] = arr[i];
-                combinationUtil(arr, data, i, end, index + 1, r);
+                combinationUtil(arr, data, i, end, index + 1, r, desiredValue);
             }
         }catch(Exception e){
 
