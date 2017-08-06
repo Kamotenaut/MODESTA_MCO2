@@ -5,17 +5,13 @@
     <bookmark url="file://$PROJECT_DIR$/src/RServeConnector.java" line="311" mnemonic="9" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="71c62b6a-06c2-44f0-9241-5b8e4ff8a099" name="Default" comment="-added graphing,">
+    <list default="true" id="71c62b6a-06c2-44f0-9241-5b8e4ff8a099" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/MODESTA_MCO2/CardDrawSim.class" afterPath="$PROJECT_DIR$/out/production/MODESTA_MCO2/CardDrawSim.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/MODESTA_MCO2/Driver.class" afterPath="$PROJECT_DIR$/out/production/MODESTA_MCO2/Driver.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/MODESTA_MCO2/GUI$1.class" afterPath="$PROJECT_DIR$/out/production/MODESTA_MCO2/GUI$1.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/MODESTA_MCO2/GUI$RunResultModel.class" afterPath="$PROJECT_DIR$/out/production/MODESTA_MCO2/GUI$RunResultModel.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/MODESTA_MCO2/GUI.class" afterPath="$PROJECT_DIR$/out/production/MODESTA_MCO2/GUI.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/CardDrawSim.java" afterPath="$PROJECT_DIR$/src/CardDrawSim.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Driver.java" afterPath="$PROJECT_DIR$/src/Driver.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/GUI.java" afterPath="$PROJECT_DIR$/src/GUI.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/RServeConnector.java" afterPath="$PROJECT_DIR$/src/RServeConnector.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -60,8 +56,8 @@
       <file leaf-file-name="CardDrawSim.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/CardDrawSim.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2366">
-              <caret line="127" column="59" lean-forward="false" selection-start-line="127" selection-start-column="50" selection-end-line="127" selection-end-column="59" />
+            <state relative-caret-position="266">
+              <caret line="27" column="40" lean-forward="true" selection-start-line="27" selection-start-column="40" selection-end-line="28" selection-end-column="41" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -649,7 +645,7 @@
       <workItem from="1501847818687" duration="11677000" />
       <workItem from="1501938759777" duration="24297000" />
       <workItem from="1502004995679" duration="12624000" />
-      <workItem from="1502020087285" duration="1396000" />
+      <workItem from="1502020087285" duration="1477000" />
     </task>
     <task id="LOCAL-00001" summary="Added RServeConnector">
       <created>1501942918273</created>
@@ -679,11 +675,18 @@
       <option name="project" value="LOCAL" />
       <updated>1502011091187</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="-added graphing,&#10;- added arraylist for probabilties of distribution">
+      <created>1502021519481</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1502021519481</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="52061000" />
+    <option name="totallyTimeSpent" value="52142000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-9" y="-9" width="1938" height="1048" extended-state="6" />
@@ -766,7 +769,8 @@
     <MESSAGE value="Added Permutations and Combinations" />
     <MESSAGE value="-" />
     <MESSAGE value="- Added dbinom, dnbinom, dhyper, and dmultinom functions in RServeConnetor" />
-    <option name="LAST_COMMIT_MESSAGE" value="- Added dbinom, dnbinom, dhyper, and dmultinom functions in RServeConnetor" />
+    <MESSAGE value="-added graphing,&#10;- added arraylist for probabilties of distribution" />
+    <option name="LAST_COMMIT_MESSAGE" value="-added graphing,&#10;- added arraylist for probabilties of distribution" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1153,8 +1157,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/CardDrawSim.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2366">
-          <caret line="127" column="59" lean-forward="false" selection-start-line="127" selection-start-column="50" selection-end-line="127" selection-end-column="59" />
+        <state relative-caret-position="266">
+          <caret line="27" column="40" lean-forward="true" selection-start-line="27" selection-start-column="40" selection-end-line="28" selection-end-column="41" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>

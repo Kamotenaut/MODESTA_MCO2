@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="R User Library">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/src/rsc/REngine.jar!/" />
+      <root url="jar://$PROJECT_DIR$/src/rsc/Rserve.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
