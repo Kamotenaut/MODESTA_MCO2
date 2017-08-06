@@ -90,7 +90,7 @@ public class RServeConnector {
         try {
             connection = new RConnection();
             connection.eval("try(png('" + USER_DIR +"image" + Integer.toString(imageCount)+".png'))");
-            connection.eval("plot(c("+code+"),main='"+title+"',ylab='Probability', xlab='Frequency')");
+            connection.eval("plot(c("+code+"),main='"+title+"',ylab='Total Value', xlab='Trial Number')");
             connection.eval("dev.off()");
         } catch (RserveException e) {
             e.printStackTrace();
@@ -237,7 +237,7 @@ public class RServeConnector {
         double result = 0;
         try {
             connection = new RConnection();
-            result = connection.eval("round(dbinom("+n+",size="+size+",prob="+prob+"),4)").asDouble();
+            result = connection.eval("round(dbinom("+n+","+size+","+prob+"),4)").asDouble();
         } catch (RserveException e) {
             e.printStackTrace();
         } catch (REXPMismatchException e) {
@@ -320,6 +320,25 @@ public class RServeConnector {
         try {
             connection = new RConnection();
             result = connection.eval("round(dmultinom(" + inputCode + ","+probCode+"),4)").asDouble();
+        } catch (RserveException e) {
+            e.printStackTrace();
+        } catch (REXPMismatchException e) {
+            e.printStackTrace();
+        } finally {
+            connection.close();
+        }
+        imageCount++;
+        return result;
+    }
+
+    public double doDMultinom(String inputCode){
+        connection = null;
+        double result = 0;
+
+        try {
+            connection = new RConnection();
+            System.out.println("round(dmultinom("+inputCode+"),4)");
+            result = connection.eval("round(dmultinom("+inputCode+"),4)").asDouble();
         } catch (RserveException e) {
             e.printStackTrace();
         } catch (REXPMismatchException e) {

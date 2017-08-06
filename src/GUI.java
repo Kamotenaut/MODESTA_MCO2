@@ -91,6 +91,11 @@ public class GUI {
                 CardDrawSim sim = new CardDrawSim(numTrials,numCards,numSearchValue, withReplace);
                 // WHERE THE COMPUTING BEGINS
                 resultModel.computeProbabilities(numTrials, numCards, numSearchValue, withReplace);
+                resultModel.setValueAt(sim.getIdealBinomProbElem(),0,0);
+                resultModel.setValueAt(sim.getIdealNBinomProbElem(),0,1);
+                resultModel.setValueAt(sim.getIdealHyperProbElem(),0,2);
+                resultModel.setValueAt(0.01, 0, 3);
+                resultModel.setValueAt(sim.getIdealMultiProbElem(), 0, 4);
             }
         });
     }

@@ -20,6 +20,7 @@ public class CardDrawSim {
     private int correctCombinationsWORep = 0;
     private boolean withReplacement;
     private int totalCombinations = 0;
+    private double idealBinomProbElem, idealNBinomProbElem, idealHyperProbElem, idealMultiProbElem;
 
     public CardDrawSim(int numTrials, int numCards, int userValue, boolean withReplacement){
         this.withReplacement = withReplacement;
@@ -54,6 +55,10 @@ public class CardDrawSim {
     }
 
     public void run(){
+        if(withReplacement)
+            doAllReplacement();
+        else
+            doAllNoReplacement();
         while(currTrial<numTrials){
             System.out.println("Trial #" + (currTrial+1));
             DrawCards();
@@ -64,8 +69,6 @@ public class CardDrawSim {
         if(withReplacement)
             graphAllRep();
         else graphAllNoRep();
-        /*rServeConnector.graphValuesHist(cardHandRepValues, "Histogram of Actual Results Repetitions");
-        rServeConnector.graphValuesScatterPlot(cardHandRepValues,"Scatterplot of Actual Results (Repetitions)" );*/
         System.out.println("Num of correct trials: " + corGuess);
     }
 
@@ -89,68 +92,34 @@ public class CardDrawSim {
             corGuess++;
         cardHandNoRepValues.add(sumNRoRep);
         cardHandRepValues.add(sumRep);
-        if(withReplacement)
-            doAllReplacement();
-        else
-            doAllNoReplacement();
     }
 
     private void doAllNoReplacement(){
-        binomProb.add(rServeConnector.doDBinom(1, numTrials, idealProbabilityNoRep));
-        nbinomProb.add(rServeConnector.doDNBinom(totalCombinations-correctCombinationsWORep, correctCombinationsWORep, idealProbabilityNoRep));
-        hyperProb.add(rServeConnector.doDHyper(1,correctCombinationsWORep,totalCombinations-correctCombinationsWORep,numCards));
-        //multiProb.add(rServeConnector.doDMultinom());
+        idealBinomProbElem = rServeConnector.doDBinom(1, numTrials, idealProbabilityNoRep);
+        idealNBinomProbElem = rServeConnector.doDNBinom(0, 1, idealProbabilityNoRep);
+        idealHyperProbElem = rServeConnector.doDHyper(1,correctCombinationsWORep,totalCombinations-correctCombinationsWORep,numCards);
+        idealMultiProbElem = rServeConnector.doDMultinom("c(0,1),prob=c(1-"+idealProbabilityNoRep+","+idealProbabilityNoRep+")");
+    }
+
+    private void doAllReplacement(){
+        idealBinomProbElem = rServeConnector.doDBinom(1, numTrials, idealProbabilityRep);
+        idealNBinomProbElem = rServeConnector.doDNBinom(totalCombinations-correctCombinationsWORep, correctCombinationsWRep, idealProbabilityRep);
+        idealHyperProbElem = rServeConnector.doDHyper(1,correctCombinationsWRep,totalCombinations-correctCombinationsWRep,numCards);
+        idealMultiProbElem = rServeConnector.doDMultinom("c(0,1),prob=c(1-"+idealProbabilityRep+","+idealProbabilityRep +")");
     }
 
     private void graphAllNoRep(){
         rServeConnector.graphValuesHist(cardHandNoRepValues,"Histogram of Actual Results (No Repetitions)");
         rServeConnector.graphValuesScatterPlot(cardHandNoRepValues,"Scatterplot of Actual Results (No Repetitions)" );
         //rServeConnector.graphValuesLineGraph(cardHandNoRepValues,"Line Graph of Actual Results (No Repetitions)" );
-
-        rServeConnector.graphValuesHistProb(binomProb,"Histogram of Binomial Distribution (No Repetitions)");
-        rServeConnector.graphValuesScatterPlotProb(binomProb,"Scatterplot of Binomial Distribution  (No Repetitions)" );
-        //rServeConnector.graphValuesLineGraphProb(binomProb,"Line Graph of Binomial Distribution  (No Repetitions)" );
-
-        rServeConnector.graphValuesHistProb(nbinomProb,"Histogram of Negative Binomial Distribution (No Repetitions)");
-        rServeConnector.graphValuesScatterPlotProb(nbinomProb,"Scatterplot of Negative Binomial Distribution  (No Repetitions)" );
-        //rServeConnector.graphValuesLineGraphProb(nbinomProb,"Line Graph of Negative Binomial Distribution  (No Repetitions)" );
-
-        rServeConnector.graphValuesHistProb(hyperProb,"Histogram of Hypergeometric Distribution (No Repetitions)");
-        rServeConnector.graphValuesScatterPlotProb(hyperProb,"Scatterplot of Hypergeometric Distribution  (No Repetitions)" );
-        //rServeConnector.graphValuesLineGraphProb(hyperProb,"Line Graph of Hypergeometric Distribution  (No Repetitions)" );
-
-        /*rServeConnector.graphValuesHistProb(multiProb,"Histogram of Multinomial Distribution (No Repetitions)");
-        rServeConnector.graphValuesScatterPlotProb(multiProb,"Scatterplot of Multinomial Distribution  (No Repetitions)" );
-        rServeConnector.graphValuesLineGraphProb(multiProb,"Line Graph of Multinomial Distribution  (No Repetitions)" );*/
     }
 
-    private void doAllReplacement(){
-        binomProb.add(rServeConnector.doDBinom(1, numTrials, idealProbabilityRep));
-        nbinomProb.add(rServeConnector.doDNBinom(totalCombinations-correctCombinationsWRep, correctCombinationsWRep, idealProbabilityRep));
-        hyperProb.add(rServeConnector.doDHyper(1,correctCombinationsWRep,totalCombinations-correctCombinationsWRep,numCards));
-        //multiProb.add(rServeConnector.doDMultinom());
-    }
+
 
     private void graphAllRep(){
         rServeConnector.graphValuesHist(cardHandRepValues,"Histogram of Actual Results (Repetitions)");
         rServeConnector.graphValuesScatterPlot(cardHandRepValues,"Scatterplot of Actual Results (Repetitions)" );
-        rServeConnector.graphValuesLineGraph(cardHandRepValues,"Line Graph of Actual Results (Repetitions)" );
-
-        rServeConnector.graphValuesHistProb(binomProb,"Histogram of Binomial Distribution (Repetitions)");
-        rServeConnector.graphValuesScatterPlotProb(binomProb,"Scatterplot of Binomial Distribution  (Repetitions)" );
-        rServeConnector.graphValuesLineGraphProb(binomProb,"Line Graph of Binomial Distribution  (Repetitions)" );
-
-        rServeConnector.graphValuesHistProb(nbinomProb,"Histogram of Negative Binomial Distribution (Repetitions)");
-        rServeConnector.graphValuesScatterPlotProb(nbinomProb,"Scatterplot of Negative Binomial Distribution  (Repetitions)" );
-        rServeConnector.graphValuesLineGraphProb(nbinomProb,"Line Graph of Negative Binomial Distribution  (Repetitions)" );
-
-        rServeConnector.graphValuesHistProb(hyperProb,"Histogram of Hypergeometric Distribution (Repetitions)");
-        rServeConnector.graphValuesScatterPlotProb(hyperProb,"Scatterplot of Hypergeometric Distribution  (Repetitions)" );
-        rServeConnector.graphValuesLineGraphProb(hyperProb,"Line Graph of Hypergeometric Distribution  (Repetitions)" );
-
-        /*rServeConnector.graphValuesHistProb(multiProb,"Histogram of Multinomial Distribution (No Repetitions)");
-        rServeConnector.graphValuesScatterPlotProb(multiProb,"Scatterplot of Multinomial Distribution  (No Repetitions)" );
-        rServeConnector.graphValuesLineGraphProb(multiProb,"Line Graph of Multinomial Distribution  (No Repetitions)" );*/
+     //   rServeConnector.graphValuesLineGraph(cardHandRepValues,"Line Graph of Actual Results (Repetitions)" );
     }
 
     public void getProbabilityOfCorrectValue(){
@@ -205,17 +174,17 @@ public class CardDrawSim {
 
 
             if(sum == userValue){
-                System.out.print("$$$$ Correct Value : " );
+                //System.out.print("$$$$ Correct Value : " );
                 for(int i=0; i<r; i++)
-                    System.out.print(data[i] + " ");
-                System.out.println();
+                    //System.out.print(data[i] + " ");
+                //System.out.println();
                 for(int j=0; j<r; j++){
                     if(j+1 < r)
                         if(data[j] == data[j+1]){
                             sameNumCtr ++;
                         }
                 }
-                System.out.println("Same Num Ctr : " + sameNumCtr);
+                //System.out.println("Same Num Ctr : " + sameNumCtr);
                 correctCombinationsWRep ++;
                 if(sameNumCtr <= 3)
                     correctCombinationsWORep ++;
@@ -235,5 +204,21 @@ public class CardDrawSim {
         }catch(Exception e){
 
         }
+    }
+
+    public double getIdealBinomProbElem() {
+        return idealBinomProbElem;
+    }
+
+    public double getIdealNBinomProbElem() {
+        return idealNBinomProbElem;
+    }
+
+    public double getIdealHyperProbElem() {
+        return idealHyperProbElem;
+    }
+
+    public double getIdealMultiProbElem() {
+        return idealMultiProbElem;
     }
 }
