@@ -98,14 +98,14 @@ public class CardDrawSim {
         idealBinomProbElem = rServeConnector.doDBinom(1, numTrials, idealProbabilityNoRep);
         idealNBinomProbElem = rServeConnector.doDNBinom(0, 1, idealProbabilityNoRep);
         idealHyperProbElem = rServeConnector.doDHyper(1,correctCombinationsWORep,totalCombinations-correctCombinationsWORep,numCards);
-        idealMultiProbElem = rServeConnector.doDMultinom("c(0,1),prob=c(1-"+idealProbabilityNoRep+","+idealProbabilityNoRep+")");
+        idealMultiProbElem = rServeConnector.doDMultinom(correctCombinationsWORep, totalCombinations-correctCombinationsWORep, idealProbabilityNoRep, 1-idealProbabilityNoRep);
     }
 
     private void doAllReplacement(){
         idealBinomProbElem = rServeConnector.doDBinom(1, numTrials, idealProbabilityRep);
         idealNBinomProbElem = rServeConnector.doDNBinom(totalCombinations-correctCombinationsWORep, correctCombinationsWRep, idealProbabilityRep);
         idealHyperProbElem = rServeConnector.doDHyper(1,correctCombinationsWRep,totalCombinations-correctCombinationsWRep,numCards);
-        idealMultiProbElem = rServeConnector.doDMultinom("c(0,1),prob=c(1-"+idealProbabilityRep+","+idealProbabilityRep +")");
+        idealMultiProbElem = rServeConnector.doDMultinom(correctCombinationsWRep, totalCombinations-correctCombinationsWRep, idealProbabilityRep, 1-idealProbabilityRep);
     }
 
     private void graphAllNoRep(){

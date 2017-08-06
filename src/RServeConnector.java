@@ -331,14 +331,14 @@ public class RServeConnector {
         return result;
     }
 
-    public double doDMultinom(String inputCode){
+    public double doDMultinom(/*String inputCode*/ int success, int fail, float successProb, float failProb){
         connection = null;
         double result = 0;
 
         try {
             connection = new RConnection();
-            System.out.println("round(dmultinom("+inputCode+"),4)");
-            result = connection.eval("round(dmultinom("+inputCode+"),4)").asDouble();
+            System.out.println("round(dmultinom( c(" + success + ","+ fail + "), prob=c("+ successProb +"," + failProb + ") ),4)");
+            result = connection.eval("round(dmultinom( c(" + success + ","+ fail + "), prob=c("+ successProb +"," + failProb + ") ),4)").asDouble();
         } catch (RserveException e) {
             e.printStackTrace();
         } catch (REXPMismatchException e) {
