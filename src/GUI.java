@@ -33,6 +33,7 @@ public class GUI {
 
     private JTable tableRunResult;
     private JCheckBox cboxRep;
+    private JSpinner spinnerSearchValue;
 
     // INPUT ATTRIBUTES
     String[] arrayTrial = {"10", "100", "1000", "10000", "100000"};
@@ -53,19 +54,12 @@ public class GUI {
 
     private void createUIComponents() {
 
+        // COMBOBOX
         comboBoxTrial.setModel(new DefaultComboBoxModel(arrayTrial));
         comboBoxCard.setModel(new DefaultComboBoxModel(arrayCard));
 
-        // FORMATTED TEXT FIELD
-        NumberFormat format = NumberFormat.getInstance();
-        NumberFormatter formatter = new NumberFormatter(format);
-        formatter.setValueClass(Integer.class);
-        formatter.setMinimum(0);
-        formatter.setMaximum(Integer.MAX_VALUE);
-        formatter.setAllowsInvalid(false);
-        // If you want the value to be committed on each keystroke instead of focus lost
-        formatter.setCommitsOnValidEdit(true);
-        fTxtFieldTotalValue.setFormatterFactory(new DefaultFormatterFactory(formatter));
+        // SPINNER
+        // ((SpinnerNumberModel)spinnerSearchValue.getModel()).setMaximum();
 
         // JTABLE
         tableRunResult.setModel(resultModel);
@@ -83,19 +77,20 @@ public class GUI {
                 numCards = Integer.parseInt((String)comboBoxCard.getSelectedItem());
 
                 // Get input from textfield - number to search
-                if(fTxtFieldTotalValue.getValue() != null)
-                    numSearchValue = (int)fTxtFieldTotalValue.getValue();
+                if(spinnerSearchValue.getValue() != null)
+                    numSearchValue = (int)spinnerSearchValue.getValue();
 
                 // Get input from checkbox
                 withReplace = cboxRep.isSelected();
                 CardDrawSim sim = new CardDrawSim(numTrials,numCards,numSearchValue, withReplace);
+
                 // WHERE THE COMPUTING BEGINS
                 resultModel.computeProbabilities(numTrials, numCards, numSearchValue, withReplace);
                 resultModel.setValueAt(sim.getIdealBinomProbElem(),0,0);
                 resultModel.setValueAt(sim.getIdealNBinomProbElem(),0,1);
                 resultModel.setValueAt(sim.getIdealHyperProbElem(),0,2);
-                resultModel.setValueAt(0.01, 0, 3);
-                resultModel.setValueAt(sim.getIdealMultiProbElem(), 0, 4);
+                resultModel.setValueAt(sim.getIdealMultiProbElem(), 0, 3);
+                resultModel.setValueAt(0.01, 0, 4);
             }
         });
     }

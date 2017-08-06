@@ -103,7 +103,7 @@ public class CardDrawSim {
 
     private void doAllReplacement(){
         idealBinomProbElem = rServeConnector.doDBinom(1, numTrials, idealProbabilityRep);
-        idealNBinomProbElem = rServeConnector.doDNBinom(totalCombinations-correctCombinationsWORep, correctCombinationsWRep, idealProbabilityRep);
+        idealNBinomProbElem = rServeConnector.doDNBinom(totalCombinations-correctCombinationsWRep, correctCombinationsWRep, idealProbabilityRep);
         idealHyperProbElem = rServeConnector.doDHyper(1,correctCombinationsWRep,totalCombinations-correctCombinationsWRep,numCards);
         idealMultiProbElem = rServeConnector.doDMultinom(correctCombinationsWRep, totalCombinations-correctCombinationsWRep, idealProbabilityRep, 1-idealProbabilityRep);
     }
@@ -204,6 +204,10 @@ public class CardDrawSim {
         }catch(Exception e){
 
         }
+    }
+
+    public double getActualProbElem(){
+        return 
     }
 
     public double getIdealBinomProbElem() {
