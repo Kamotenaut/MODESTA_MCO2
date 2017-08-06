@@ -77,82 +77,28 @@ public class GUI {
         buttonRun.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+
                 // Get input from combo boxes
                 numTrials = Integer.parseInt((String)comboBoxTrial.getSelectedItem());
                 numCards = Integer.parseInt((String)comboBoxCard.getSelectedItem());
-                // Get input from textfield - number to search
 
+                // Get input from textfield - number to search
                 if(fTxtFieldTotalValue.getValue() != null)
                     numSearchValue = (int)fTxtFieldTotalValue.getValue();
 
                 // Get input from checkbox
                 withReplace = cboxRep.isSelected();
 
-                System.out.println(numTrials + " " + numCards + " " + numSearchValue + " " + withReplace);
-
-                // Print on csv file
-
-                // Changing content of table
-                // DBINOM - resultModel.setValueAt(<int result>, 0, 0);
-                // NBINOM - resultModel.setValueAt(<int result>, 0, 1);
-                // DHYPER - resultModel.setValueAt(<int result>, 0, 2);
-                // DMULTINOM - resultModel.setValueAt(<int result>, 0, 3);
-                // ACTUAL - resultModel.setValueAt(<int result>, 0, 4);
+                // WHERE THE COMPUTING BEGINS
+                resultModel.computeProbabilities(numTrials, numCards, numSearchValue, withReplace);
             }
         });
     }
 
-    class RunResultModel extends AbstractTableModel {
-        private String[] columnNames = {"Binomial",
-                "Negative Binomial",
-                "Hypergeometric",
-                "Multinomial",
-                "ACTUAL"};
-        private Object[][] data = {
-                {" ", " ", " ", " ", " "}
-        };
+    // Change the contents of the probability row in JTable
+    private void changeProbTable(double dbinom, double dnbinom,
+                                 double dhyper, double dmultinom,
+                                 double dactual){
 
-        public int getColumnCount() {
-            return columnNames.length;
-        }
-
-        public int getRowCount() {
-            return data.length;
-        }
-
-        public String getColumnName(int col) {
-            return columnNames[col];
-        }
-
-        public Object getValueAt(int row, int col) {
-            return data[row][col];
-        }
-
-        public Class getColumnClass(int c) {
-            return getValueAt(0, c).getClass();
-        }
-
-        /*
-         * Don't need to implement this method unless your table's
-         * editable.
-         */
-        public boolean isCellEditable(int row, int col) {
-            //Note that the data/cell address is constant,
-            //no matter where the cell appears onscreen.
-            if (col < 2) {
-                return false;
-            } else {
-                return true;
-            }
-        }
-
-        /*
-         * Don't need to implement this method unless your table's
-         * data can change.
-         */
-        public void setValueAt(Object value, int row, int col) {
-            data[row][col] = value;
-            fireTableCellUpdated(row, col);
-        }
     }
 }
