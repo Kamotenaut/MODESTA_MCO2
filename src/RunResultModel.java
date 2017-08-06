@@ -5,6 +5,9 @@ import javax.swing.table.AbstractTableModel;
  */
 public class RunResultModel extends AbstractTableModel {
 
+    public RunResultModel(){
+    }
+
     private String[] columnNames = {"Binomial",
             "Negative Binomial",
             "Hypergeometric",
