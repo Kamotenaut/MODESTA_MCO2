@@ -21,13 +21,13 @@ public class GUI {
     private JScrollPane resultScrollPane;
 
     private JComboBox comboBoxTrial;
-    private JComboBox comboBoxCard;
 
     private JLabel labelNumTrial;
     private JLabel labelNumCard;
     private JLabel labelTotalValue;
 
     private JFormattedTextField fTxtFieldTotalValue;
+    private JFormattedTextField fTxtFieldNumCard;
 
     private JButton buttonRun;
 
@@ -36,7 +36,6 @@ public class GUI {
 
     // INPUT ATTRIBUTES
     String[] arrayTrial = {"10", "100", "1000", "10000", "100000"};
-    String[] arrayCard = {"1", "2", "3", "4", "5"};
     String[] columnNames = {"Binomial",
             "Negative Binomial",
             "Hypergeometric",
@@ -54,18 +53,28 @@ public class GUI {
     private void createUIComponents() {
 
         comboBoxTrial.setModel(new DefaultComboBoxModel(arrayTrial));
-        comboBoxCard.setModel(new DefaultComboBoxModel(arrayCard));
 
         // FORMATTED TEXT FIELD
         NumberFormat format = NumberFormat.getInstance();
         NumberFormatter formatter = new NumberFormatter(format);
         formatter.setValueClass(Integer.class);
-        formatter.setMinimum(0);
+        formatter.setMinimum(1);
         formatter.setMaximum(Integer.MAX_VALUE);
         formatter.setAllowsInvalid(false);
         // If you want the value to be committed on each keystroke instead of focus lost
         formatter.setCommitsOnValidEdit(true);
-        fTxtFieldTotalValue.setFormatterFactory(new DefaultFormatterFactory(formatter));
+        fTxtFieldNumCard.setFormatterFactory(new DefaultFormatterFactory(formatter));
+
+        // FORMATTED TEXT FIELD
+        NumberFormat format2 = NumberFormat.getInstance();
+        NumberFormatter formatter2 = new NumberFormatter(format);
+        formatter2.setValueClass(Integer.class);
+        formatter2.setMinimum(0);
+        formatter2.setMaximum(Integer.MAX_VALUE);
+        formatter2.setAllowsInvalid(false);
+        // If you want the value to be committed on each keystroke instead of focus lost
+        formatter.setCommitsOnValidEdit(true);
+        fTxtFieldTotalValue.setFormatterFactory(new DefaultFormatterFactory(formatter2));
 
         // JTABLE
         tableRunResult.setModel(resultModel);
@@ -79,8 +88,10 @@ public class GUI {
             public void actionPerformed(ActionEvent e) {
                 // Get input from combo boxes
                 numTrials = Integer.parseInt((String)comboBoxTrial.getSelectedItem());
-                numCards = Integer.parseInt((String)comboBoxCard.getSelectedItem());
-                // Get input from textfield - number to search
+                
+                // Get input from textfield
+                if(fTxtFieldTotalValue.getValue() != null)
+                    numCards = (int)fTxtFieldNumCard.getValue();
 
                 if(fTxtFieldTotalValue.getValue() != null)
                     numSearchValue = (int)fTxtFieldTotalValue.getValue();
