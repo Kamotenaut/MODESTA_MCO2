@@ -21,13 +21,13 @@ public class GUI {
     private JScrollPane resultScrollPane;
 
     private JComboBox comboBoxTrial;
+    private JComboBox comboBoxCard;
 
     private JLabel labelNumTrial;
     private JLabel labelNumCard;
     private JLabel labelTotalValue;
 
     private JFormattedTextField fTxtFieldTotalValue;
-    private JFormattedTextField fTxtFieldNumCard;
 
     private JButton buttonRun;
 
@@ -36,6 +36,7 @@ public class GUI {
 
     // INPUT ATTRIBUTES
     String[] arrayTrial = {"10", "100", "1000", "10000", "100000"};
+    String[] arrayCard = {"1", "2", "3", "4", "5"};
     String[] columnNames = {"Binomial",
             "Negative Binomial",
             "Hypergeometric",
@@ -53,28 +54,18 @@ public class GUI {
     private void createUIComponents() {
 
         comboBoxTrial.setModel(new DefaultComboBoxModel(arrayTrial));
+        comboBoxCard.setModel(new DefaultComboBoxModel(arrayCard));
 
         // FORMATTED TEXT FIELD
         NumberFormat format = NumberFormat.getInstance();
         NumberFormatter formatter = new NumberFormatter(format);
         formatter.setValueClass(Integer.class);
-        formatter.setMinimum(1);
+        formatter.setMinimum(0);
         formatter.setMaximum(Integer.MAX_VALUE);
         formatter.setAllowsInvalid(false);
         // If you want the value to be committed on each keystroke instead of focus lost
         formatter.setCommitsOnValidEdit(true);
-        fTxtFieldNumCard.setFormatterFactory(new DefaultFormatterFactory(formatter));
-
-        // FORMATTED TEXT FIELD
-        NumberFormat format2 = NumberFormat.getInstance();
-        NumberFormatter formatter2 = new NumberFormatter(format);
-        formatter2.setValueClass(Integer.class);
-        formatter2.setMinimum(0);
-        formatter2.setMaximum(Integer.MAX_VALUE);
-        formatter2.setAllowsInvalid(false);
-        // If you want the value to be committed on each keystroke instead of focus lost
-        formatter.setCommitsOnValidEdit(true);
-        fTxtFieldTotalValue.setFormatterFactory(new DefaultFormatterFactory(formatter2));
+        fTxtFieldTotalValue.setFormatterFactory(new DefaultFormatterFactory(formatter));
 
         // JTABLE
         tableRunResult.setModel(resultModel);
@@ -86,84 +77,28 @@ public class GUI {
         buttonRun.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+
                 // Get input from combo boxes
                 numTrials = Integer.parseInt((String)comboBoxTrial.getSelectedItem());
-                
-                // Get input from textfield
-                if(fTxtFieldTotalValue.getValue() != null)
-                    numCards = (int)fTxtFieldNumCard.getValue();
+                numCards = Integer.parseInt((String)comboBoxCard.getSelectedItem());
 
+                // Get input from textfield - number to search
                 if(fTxtFieldTotalValue.getValue() != null)
                     numSearchValue = (int)fTxtFieldTotalValue.getValue();
 
                 // Get input from checkbox
                 withReplace = cboxRep.isSelected();
-
-                System.out.println(numTrials + " " + numCards + " " + numSearchValue + " " + withReplace);
                 CardDrawSim sim = new CardDrawSim(numTrials,numCards,numSearchValue, withReplace);
-                // Print on csv file
-
-                // Changing content of table
-                // DBINOM - resultModel.setValueAt(<int result>, 0, 0);
-                // NBINOM - resultModel.setValueAt(<int result>, 0, 1);
-                // DHYPER - resultModel.setValueAt(<int result>, 0, 2);
-                // DMULTINOM - resultModel.setValueAt(<int result>, 0, 3);
-                // ACTUAL - resultModel.setValueAt(<int result>, 0, 4);
+                // WHERE THE COMPUTING BEGINS
+                resultModel.computeProbabilities(numTrials, numCards, numSearchValue, withReplace);
             }
         });
     }
 
-    class RunResultModel extends AbstractTableModel {
-        private String[] columnNames = {"Binomial",
-                "Negative Binomial",
-                "Hypergeometric",
-                "Multinomial",
-                "ACTUAL"};
-        private Object[][] data = {
-                {" ", " ", " ", " ", " "}
-        };
+    // Change the contents of the probability row in JTable
+    private void changeProbTable(double dbinom, double dnbinom,
+                                 double dhyper, double dmultinom,
+                                 double dactual){
 
-        public int getColumnCount() {
-            return columnNames.length;
-        }
-
-        public int getRowCount() {
-            return data.length;
-        }
-
-        public String getColumnName(int col) {
-            return columnNames[col];
-        }
-
-        public Object getValueAt(int row, int col) {
-            return data[row][col];
-        }
-
-        public Class getColumnClass(int c) {
-            return getValueAt(0, c).getClass();
-        }
-
-        /*
-         * Don't need to implement this method unless your table's
-         * editable.
-         */
-        public boolean isCellEditable(int row, int col) {
-            //Note that the data/cell address is constant,
-            //no matter where the cell appears onscreen.
-            if (col < 2) {
-                return false;
-            } else {
-                return true;
-            }
-        }
-
-        /*
-         * Don't need to implement this method unless your table's
-         * data can change.
-         */
-        public void setValueAt(Object value, int row, int col) {
-            data[row][col] = value;
-            fireTableCellUpdated(row, col);
-        }
     }
 }
