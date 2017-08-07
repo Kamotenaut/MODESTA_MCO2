@@ -11,8 +11,9 @@ import javax.swing.JOptionPane;
 public class TXTWriter
 {
 
-    public void write(String fileName, String printString)
+    public void write(String printString)
     {
+        String fileName = "log.txt";
         FileWriter fileWriter = null;
 
         try
