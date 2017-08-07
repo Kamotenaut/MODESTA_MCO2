@@ -36,7 +36,7 @@ public class GUI {
     private JSpinner spinnerSearchValue;
 
     // INPUT ATTRIBUTES
-    String[] arrayTrial = {"10", "100", "1000", "10000", "100000"};
+    String[] arrayTrial = {"10", "100", "1000", "10000"};
     String[] arrayCard = {"1", "2", "3", "4", "5"};
     String[] columnNames = {"Binomial",
             "Negative Binomial",
@@ -59,7 +59,9 @@ public class GUI {
         comboBoxCard.setModel(new DefaultComboBoxModel(arrayCard));
 
         // SPINNER
-        // ((SpinnerNumberModel)spinnerSearchValue.getModel()).setMaximum();
+        spinnerSearchValue.setValue(1);
+        ((SpinnerNumberModel)spinnerSearchValue.getModel()).setMinimum(1);
+        ((SpinnerNumberModel)spinnerSearchValue.getModel()).setMaximum(13*5);
 
         // JTABLE
         tableRunResult.setModel(resultModel);
