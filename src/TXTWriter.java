@@ -27,6 +27,9 @@ public class TXTWriter
                 System.out.println("Checking CSV line...");
             }
 
+            // Act like println
+            printString += "\n";
+
             fileWriter.append(printString);
 
             // JOptionPane.showMessageDialog(null, "Saving successful!");

@@ -31,7 +31,7 @@ public class RServeConnector {
             connection.eval("meanVal=mean(" + vector + ")");
             double mean = connection.eval("meanVal").asDouble();
             System.out.println("[TESTING] The mean of given vector is=" + mean);
-            writer.write(filename, "[TESTING] The mean of given vector is=" + mean +"\n");
+            writer.write(filename, "[TESTING] The mean of given vector is=" + mean);
             connection.eval(COMBI_WITH_REP);
             connection.eval(PERM_WITHO_REP);
         } catch (RserveException e) {
