@@ -1,37 +1,44 @@
 /**
  * Created by jasonsapdos on 05/08/2017.
  */
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 
 import javax.swing.JOptionPane;
 
 public class TXTWriter
 {
+    private static String VALUE_FILE = "value_log.txt";
+    private static String RESULT_FILE = "result_log.txt";
 
-    public void write(String printString)
+    public void writeResult(String printString){
+        write(printString, RESULT_FILE);
+    }
+
+    public void writeValue(String printString){
+        write(printString, VALUE_FILE);
+    }
+
+    private void write(String printString, String fileName)
     {
-        String fileName = "log.txt";
-        FileWriter fileWriter = null;
+        //FileWriter fileWriter = null;
+        BufferedWriter fileWriter = null;
 
         try
         {
-            fileWriter = new FileWriter(fileName, true);
+            fileWriter = new BufferedWriter(new FileWriter(fileName, true));
+            //fileWriter = new FileWriter(fileName, true);
 
             BufferedReader br = null;
             br = new BufferedReader(new FileReader(fileName));
             String line;
 
             while((line = br.readLine()) != null) {
-                System.out.println("Checking CSV line...");
+                //System.out.println("Checking CSV line...");
             }
 
-            // Act like println
-            printString += "\n";
-
             fileWriter.append(printString);
+            fileWriter.newLine();
+
 
             // JOptionPane.showMessageDialog(null, "Saving successful!");
         }

@@ -14,7 +14,7 @@ import java.util.ListIterator;
  */
 public class RServeConnector {
 
-    TXTWriter writer = new TXTWriter();
+    //TXTWriter writer = new TXTWriter();
     String filename = "log.txt";
 
     private RConnection connection = null;
@@ -30,8 +30,8 @@ public class RServeConnector {
             String vector = "c(1,2,3,4)";
             connection.eval("meanVal=mean(" + vector + ")");
             double mean = connection.eval("meanVal").asDouble();
-            System.out.println("[TESTING] The mean of given vector is=" + mean);
-            writer.write("[TESTING] The mean of given vector is=" + mean);
+            //System.out.println("[TESTING] The mean of given vector is=" + mean);
+            //writer.write("[TESTING] The mean of given vector is=" + mean);
             connection.eval(COMBI_WITH_REP);
             connection.eval(PERM_WITHO_REP);
         } catch (RserveException e) {
@@ -54,7 +54,7 @@ public class RServeConnector {
         try {
             connection = new RConnection();
             connection.eval("try(png('" + USER_DIR +"image" + Integer.toString(imageCount)+".png'))");
-            connection.eval("hist(c("+code+"),main='"+title+"',ylab='Frequency', xlab='Possible Total Values')");
+            connection.eval("hist(c("+code+"),main='"+title+"',ylab='Frequency', xlab='Possible Total Values', col='red')");
             connection.eval("dev.off()");
         } catch (RserveException e) {
             e.printStackTrace();
@@ -64,17 +64,17 @@ public class RServeConnector {
         imageCount++;
     }
 
-    public void graphValuesHistProb(ArrayList<Double> values, String title){
-        String code = values.get(0).toString();
-        for(int i = 1; i < values.size(); i++){
-            code += ("," + values.get(i).toString());
+    public void graphProbHist(ArrayList<Double> prob, String title){
+        String code = prob.get(0).toString();
+        for(int i = 1; i < prob.size(); i++){
+            code += ("," + prob.get(i).toString());
         }
         System.out.println();
         System.out.println("hist(c("+code+"),main='"+title+"');");
         try {
             connection = new RConnection();
             connection.eval("try(png('" + USER_DIR +"image" + Integer.toString(imageCount)+".png'))");
-            connection.eval("hist(c("+code+"),main='"+title+"',ylab='Frequency', xlab='Possible Total Values')");
+            connection.eval("hist(c("+code+"),main='"+title+"',ylab='Frequency', xlab='Possible Total Values', col='red')");
             connection.eval("dev.off()");
         } catch (RserveException e) {
             e.printStackTrace();
@@ -95,7 +95,7 @@ public class RServeConnector {
         try {
             connection = new RConnection();
             connection.eval("try(png('" + USER_DIR +"image" + Integer.toString(imageCount)+".png'))");
-            connection.eval("plot(c("+code+"),main='"+title+"',ylab='Total Value', xlab='Trial Number')");
+            connection.eval("plot(c("+code+"),main='"+title+"',ylab='Total Value', xlab='Trial Number', col='blue')");
             connection.eval("dev.off()");
         } catch (RserveException e) {
             e.printStackTrace();
@@ -105,7 +105,7 @@ public class RServeConnector {
         imageCount++;
     }
 
-    public void graphValuesScatterPlotProb(ArrayList<Double> values, String title){
+    public void graphProbScatterPlot(ArrayList<Double> values, String title){
         connection = null;
         String code = values.get(0).toString();
         for(int i = 1; i < values.size(); i++){
@@ -116,7 +116,7 @@ public class RServeConnector {
         try {
             connection = new RConnection();
             connection.eval("try(png('" + USER_DIR +"image" + Integer.toString(imageCount)+".png'))");
-            connection.eval("plot(c("+code+"),main='"+title+"',ylab='Probability', xlab='Frequency')");
+            connection.eval("plot(c("+code+"),main='"+title+"',ylab='Probability', xlab='Frequency', col='green')");
             connection.eval("dev.off()");
         } catch (RserveException e) {
             e.printStackTrace();
@@ -148,7 +148,7 @@ public class RServeConnector {
         imageCount++;
     }
 
-    public void graphValuesLineGraphProb(ArrayList<Double> values, String title){
+    public void graphProbLineGraph(ArrayList<Double> values, String title){
         connection = null;
         String code = values.get(0).toString();
         for(int i = 1; i < values.size(); i++){
@@ -160,6 +160,99 @@ public class RServeConnector {
             connection = new RConnection();
             connection.eval("try(png('" + USER_DIR +"image" + Integer.toString(imageCount)+".png'))");
             connection.eval("plot(c("+code+"),main='"+title+"',ylab='Probability', xlab='Frequency',type='o'))");
+            connection.eval("dev.off()");
+        } catch (RserveException e) {
+            e.printStackTrace();
+        }finally{
+            connection.close();
+        }
+        imageCount++;
+    }
+
+    public void graphDBinom(String n, String size, Double prob){
+        connection = null;
+
+        String title = "Ideal Binomial Distribution";
+        String graph = "barplot(dbinom("+n+","+size+","+prob+"), col=rainbow(10, 0.5), main=\""+title+"\")";
+
+        System.out.println();
+        System.out.println(graph);
+        try {
+            connection = new RConnection();
+            connection.eval("try(png('" + USER_DIR +"image" + Integer.toString(imageCount)+".png'))");
+            connection.eval(graph);
+            connection.eval("dev.off()");
+        } catch (RserveException e) {
+            e.printStackTrace();
+        }finally{
+            connection.close();
+        }
+        imageCount++;
+    }
+
+    public void graphDNBinom(String n, String size, Double prob){
+        connection = null;
+
+        String title = "Ideal Neg. Binomial Distribution";
+        String graph = "barplot(dnbinom("+n+","+size+","+prob+"), col=rainbow(10, 0.5), main=\""+title+"\")";
+
+        System.out.println();
+        System.out.println(graph);
+        try {
+            connection = new RConnection();
+            connection.eval("try(png('" + USER_DIR +"image" + Integer.toString(imageCount)+".png'))");
+            connection.eval(graph);
+            connection.eval("dev.off()");
+        } catch (RserveException e) {
+            e.printStackTrace();
+        }finally{
+            connection.close();
+        }
+        imageCount++;
+    }
+
+    public void graphDHyper(String x, String m, String n, String k){
+        connection = null;
+
+        String title = "Ideal Hypergeometric Distribution";
+        String graph = "barplot(dhyper("+x+","+m+","+n+","+k+"), col=rainbow(10, 0.5), main=\""+title+"\")";
+
+        System.out.println();
+        System.out.println(graph);
+        try {
+            connection = new RConnection();
+            connection.eval("try(png('" + USER_DIR +"image" + Integer.toString(imageCount)+".png'))");
+            connection.eval(graph);
+            connection.eval("dev.off()");
+        } catch (RserveException e) {
+            e.printStackTrace();
+        }finally{
+            connection.close();
+        }
+        imageCount++;
+    }
+
+    public void graphDMultinom(ArrayList<Integer> x, ArrayList<Double> prob, int numTrials){
+        connection = null;
+
+        String xString = x.get(0).toString();
+        String probString = prob.get(0).toString();
+        for(int i = 1; i < x.size(); i++){
+            xString += ("," + x.get(i).toString());
+            probString += (", " + prob.get(i).toString());
+        }
+
+       // String graph = "barplot(dmultinom(c("+xString+"),prob=c("+probString+")), col=rainbow(10, 0.5))";
+        String title = "Ideal Multinomial Distribution";
+        String graph = "barplot(rmultinom(" + numTrials + ", size=1, prob=c(" + probString + "))[1,], col=rainbow(2, 0.2), main='"+title+"')";
+
+
+        System.out.println();
+        System.out.println(graph);
+        try {
+            connection = new RConnection();
+            connection.eval("try(png('" + USER_DIR +"image" + Integer.toString(imageCount)+".png'))");
+            connection.eval(graph);
             connection.eval("dev.off()");
         } catch (RserveException e) {
             e.printStackTrace();
@@ -238,12 +331,35 @@ public class RServeConnector {
         imageCount++;
         return sum;
     }
+
+    public double doDBinom(String n, int size, double prob){
+        connection = null;
+        double result = 0;
+        try {
+            connection = new RConnection();
+            String code = "round(sum(dbinom("+n+",size="+size+",prob="+prob+")),4)";
+            System.out.println(code);
+            result = connection.eval(code).asDouble();
+        } catch (RserveException e) {
+            e.printStackTrace();
+        } catch (REXPMismatchException e) {
+            e.printStackTrace();
+        } finally{
+            connection.close();
+        }
+        imageCount++;
+        return result;
+    }
+
+
     public double doDBinom(int n, int size, double prob){
         connection = null;
         double result = 0;
         try {
             connection = new RConnection();
-            result = connection.eval("round(dbinom("+n+","+size+","+prob+"),4)").asDouble();
+            String code = "round(sum(dbinom("+n+",size="+size+",prob="+prob+")),4)";
+            System.out.println(code);
+            result = connection.eval(code).asDouble();
         } catch (RserveException e) {
             e.printStackTrace();
         } catch (REXPMismatchException e) {
@@ -260,7 +376,9 @@ public class RServeConnector {
         List<Integer> result = new ArrayList<Integer>();
         try {
             connection = new RConnection();
-            result = connection.eval("round(rbinom("+n+",size="+size+",prob="+prob+"),4").asList();
+            String code = "round(rbinom("+n+",size="+size+",prob="+prob+"),4";
+            System.out.println(code);
+            result = connection.eval(code).asList();
         } catch (RserveException e) {
             e.printStackTrace();
         } catch (REXPMismatchException e) {
@@ -272,13 +390,74 @@ public class RServeConnector {
         return result;
     }
 
+    public double doDNBinom(String n, String size, double prob) {
+        connection = null;
+        double result = 0;
+        try {
+            connection = new RConnection();
+            String code = "round(sum(dnbinom(" + n + ",size=" + size + ",prob=" + prob + ")),4)";
+            System.out.println(code);
+            result = connection.eval(code).asDouble();
+        } catch (RserveException e) {
+            e.printStackTrace();
+        } catch (REXPMismatchException e) {
+            e.printStackTrace();
+        } finally {
+            connection.close();
+        }
+        imageCount++;
+        return result;
+    }
+
+
+    public double doDNBinom(String n, int size, double prob) {
+        connection = null;
+        double result = 0;
+        try {
+            connection = new RConnection();
+            String code = "round(sum(dnbinom(" + n + ",size=" + size + ",prob=" + prob + ")),4)";
+            System.out.println(code);
+            result = connection.eval(code).asDouble();
+        } catch (RserveException e) {
+            e.printStackTrace();
+        } catch (REXPMismatchException e) {
+            e.printStackTrace();
+        } finally {
+            connection.close();
+        }
+        imageCount++;
+        return result;
+    }
+
+
     public double doDNBinom(int n, int size, double prob) {
         connection = null;
         double result = 0;
         try {
             connection = new RConnection();
-            System.out.println("round(dnbinom(" + n + ",size=" + size + ",prob=" + prob + "),4)");
-            result = connection.eval("round(dnbinom(" + n + ",size=" + size + ",prob=" + prob + "),4)").asDouble();
+            String code = "round(sum(dnbinom(" + n + ",size=" + size + ",prob=" + prob + ")),4)";
+            System.out.println(code);
+            result = connection.eval(code).asDouble();
+        } catch (RserveException e) {
+            e.printStackTrace();
+        } catch (REXPMismatchException e) {
+            e.printStackTrace();
+        } finally {
+            connection.close();
+        }
+        imageCount++;
+        return result;
+    }
+
+
+    public double doDHyper(String n, int success, int failure, int size){
+        connection = null;
+        double result = 0;
+        try {
+            connection = new RConnection();
+            String code = "round(sum(dhyper(" + n + ","+ success + ","+ failure +"," + size + ")),4)";
+            System.out.println(code);
+            result = connection.eval(code).asDouble();
         } catch (RserveException e) {
             e.printStackTrace();
         } catch (REXPMismatchException e) {
@@ -295,8 +474,9 @@ public class RServeConnector {
         double result = 0;
         try {
             connection = new RConnection();
-            System.out.println("round(dhyper(" + n + ","+ success + ","+ failure +"," + size + ",4))");
-            result = connection.eval("round(dhyper(" + n + ","+ success + ","+ failure +"," + size + "),4)").asDouble();
+            String code = "round(sum(dhyper(" + n + ","+ success + ","+ failure +"," + size + ")),4)";
+            System.out.println(code);
+            result = connection.eval(code).asDouble();
         } catch (RserveException e) {
             e.printStackTrace();
         } catch (REXPMismatchException e) {
@@ -325,8 +505,9 @@ public class RServeConnector {
         }
         try {
             connection = new RConnection();
-            System.out.println("round(dmultinom(" + inputCode + ", prob="+probCode+"),4)");
-            result = connection.eval("round(dmultinom(" + inputCode + ", prob="+probCode+"),4)").asDouble();
+            String code = "round(dmultinom(" + inputCode + ", prob="+probCode+"),4)";
+            System.out.println(code);
+            result = connection.eval(code).asDouble();
         } catch (RserveException e) {
             e.printStackTrace();
         } catch (REXPMismatchException e) {
@@ -338,24 +519,26 @@ public class RServeConnector {
         return result;
     }
 
-    public double doDMultinom(/*String inputCode*/ int success, int fail, float successProb, float failProb){
-        connection = null;
-        double result = 0;
 
+    public void graphActualVsIdeal(double actual, double ideal, String title, String ylab, String xlab){
+        String graph =  "barplot(c(" + actual + "," + ideal + "), main='" + title + "', beside = TRUE, ylim = c(0, 1), names.arg = c(\"Ideal\", \"Actual\"), col=rainbow(2, 0.5))";
+
+        System.out.println();
+        System.out.println(graph);
         try {
             connection = new RConnection();
-            System.out.println("round(dmultinom( c(" + success + ","+ fail + "), prob=c("+ successProb +"," + failProb + ") ),4)");
-            result = connection.eval("round(dmultinom( c(" + success + ","+ fail + "), prob=c("+ successProb +"," + failProb + ") ),4)").asDouble();
+            connection.eval("try(png('" + USER_DIR +"image" + Integer.toString(imageCount)+".png'))");
+            connection.eval(graph);
+            connection.eval("dev.off()");
         } catch (RserveException e) {
             e.printStackTrace();
-        } catch (REXPMismatchException e) {
-            e.printStackTrace();
-        } finally {
+        }finally{
             connection.close();
         }
         imageCount++;
-        return result;
     }
+
+
 }
 
 

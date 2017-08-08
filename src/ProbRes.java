@@ -4,7 +4,8 @@ public class ProbRes {
     private float probRep = 0;
     private int correctCombinationsWRep = 0;
     private int correctCombinationsWORep = 0;
-    private int totalCombinations = 0;
+    private int totalCombinationsWORep = 0;
+    private int totalCombinationsWRep = 0;
     private int desiredValue = 0;
 
     public ProbRes(int desiredValue){
@@ -44,19 +45,27 @@ public class ProbRes {
         this.correctCombinationsWORep = correctCombinationsWORep;
     }
 
-    public int getTotalCombinations() {
-        return totalCombinations;
-    }
-
-    public void setTotalCombinations(int totalCombinations) {
-        this.totalCombinations = totalCombinations;
-    }
-
     public int getDesiredValue() {
         return desiredValue;
     }
 
     public void setDesiredValue(int desiredValue) {
         this.desiredValue = desiredValue;
+    }
+
+    public int getTotalCombinationsWORep() {
+        return totalCombinationsWORep;
+    }
+
+    public void setTotalCombinationsWORep(int totalCombinationsWORep) {
+        this.totalCombinationsWORep = totalCombinationsWORep;
+    }
+
+    public int getTotalCombinationsWRep() {
+        return totalCombinationsWRep;
+    }
+
+    public void setTotalCombinationsWRep(int totalCombinationsWRep) {
+        this.totalCombinationsWRep = totalCombinationsWRep;
     }
 }
