@@ -130,6 +130,7 @@ public class CardDrawSim {
             sumRep += cardRep.getValue();
         }
         writer.writeValue("Total value of Drawing without Rep: " + sumNRoRep +"\n");
+
         writer.writeValue("Total value of Drawing with Rep: " + sumRep +"\n");
         //System.out.println("Total value of Drawing without Rep: " + sumNRoRep);
         //System.out.println("Total value of Drawing with Rep: " + sumRep);
@@ -149,6 +150,9 @@ public class CardDrawSim {
         perTriWRepProb.add(new ProbRes(sumRep));
         printCombination(13, numCards, perTriWRepProb.get(perTriWRepProb.size()-1));
         getProbabilityOfValue(perTriWRepProb.get(perTriWRepProb.size()-1));
+
+        writer.writeValue("Probability of Value wo Rep: " +  perTriWORepProb.get(perTriWORepProb.size()-1).getProbNoRep());
+        writer.writeValue("Probability of Value w Rep: " +  perTriWORepProb.get(perTriWORepProb.size()-1).getProbRep());
 
 
     }
