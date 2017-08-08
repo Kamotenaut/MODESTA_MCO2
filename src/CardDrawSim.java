@@ -24,6 +24,11 @@ public class CardDrawSim {
     private ArrayList<ProbRes> perTriWRepProb;
     private ArrayList<ProbRes> perTriWORepProb;
 
+    private Stats binomStats = new Stats();
+    private Stats nbinomStats = new Stats();
+    private Stats hyperStats = new Stats();
+    private Stats multiStats = new Stats();
+
 
     public CardDrawSim(int numTrials, int numCards, int userValue, boolean withReplacement){
         this.withReplacement = withReplacement;
@@ -60,9 +65,13 @@ public class CardDrawSim {
         writer.writeResult("Probability of any of the correct combination with Replacement: " + overAllProb.getProbRep());
         writer.writeResult("Probability of any of the correct combination without Replacement: " + overAllProb.getProbNoRep());
         writer.writeResult("Binomial Distribution: " + getIdealBinomProbElem());
+        writer.writeResult("          Mean: " + binomStats.getMean() + " || Variance: " + binomStats.getVariance() + " || SD: " + binomStats.getSd());
         writer.writeResult("Neg. Binomial Distribution: " + getIdealNBinomProbElem());
+        writer.writeResult("          Mean: " + nbinomStats.getMean() + " || Variance: " + nbinomStats.getVariance() + " || SD: " + nbinomStats.getSd());
         writer.writeResult("Hypergeometric Distribution: " + getIdealHyperProbElem());
+        writer.writeResult("          Mean: " + hyperStats.getMean() + " || Variance: " + hyperStats.getVariance() + " || SD: " + hyperStats.getSd());
         writer.writeResult("Multinomial Distribution: " + getIdealMultiProbElem());
+        writer.writeResult("          Mean: " + multiStats.getMean() + " || Variance: " + multiStats.getVariance() + " || SD: " + multiStats.getSd());
 
 
         graphActualVsIdeal();
@@ -146,14 +155,42 @@ public class CardDrawSim {
 
     private void doAllNoReplacement(){
         ProbRes prob = overAllProb;
-        idealBinomProbElem = rServeConnector.doDBinom("1:"+prob.getCorrectCombinationsWORep(), numTrials, prob.getProbNoRep());
-        idealNBinomProbElem = rServeConnector.doDNBinom("1:"+(numTrials-1),
-                                                        1+"",
-                                                        prob.getProbNoRep());
-        idealHyperProbElem = rServeConnector.doDHyper("1:"+prob.getCorrectCombinationsWORep(),
-                                                        prob.getCorrectCombinationsWORep(),
-                                                    prob.getTotalCombinationsWORep() - prob.getCorrectCombinationsWORep(),
-                                                    numTrials);
+        setBinomStats(rServeConnector.doDBinom("1:"+prob.getCorrectCombinationsWORep(), numTrials, prob.getProbNoRep()));
+        setNbinomStats(rServeConnector.doDNBinom("1:"+(numTrials-1),
+                1+"",
+                prob.getProbNoRep()));
+        setHyperStats(rServeConnector.doDHyper("1:"+prob.getCorrectCombinationsWORep(),
+                prob.getCorrectCombinationsWORep(),
+                prob.getTotalCombinationsWORep() - prob.getCorrectCombinationsWORep(),
+                numTrials));
+
+
+        ArrayList<Integer> n = new ArrayList<>();
+        ArrayList<Double> p = new ArrayList<>();
+        n.add(1);
+        n.add(numTrials-1);
+        p.add((double)prob.getProbNoRep());
+        p.add((double)1-p.get(0));
+
+        setMultiStats(rServeConnector.doDMultinom(n, p));
+
+        idealBinomProbElem = getBinomStats().getProb();
+        idealNBinomProbElem = getNbinomStats().getProb();
+        idealHyperProbElem = getHyperStats().getProb();
+        idealMultiProbElem = getMultiStats().getProb();
+    }
+
+    private void doAllReplacement(){
+        ProbRes prob = overAllProb;
+
+        setBinomStats(rServeConnector.doDBinom("1:"+prob.getCorrectCombinationsWRep(), numTrials, prob.getProbRep()));
+        setNbinomStats(rServeConnector.doDNBinom("1:"+(numTrials-1),
+                1+"",
+                prob.getProbRep()));
+        setHyperStats(rServeConnector.doDHyper("1:"+prob.getCorrectCombinationsWRep(),
+                prob.getCorrectCombinationsWRep(),
+                prob.getTotalCombinationsWRep() - prob.getCorrectCombinationsWRep(),
+                numTrials));
 
         ArrayList<Integer> n = new ArrayList<>();
         ArrayList<Double> p = new ArrayList<>();
@@ -162,31 +199,14 @@ public class CardDrawSim {
         p.add((double)prob.getProbRep());
         p.add((double)1-p.get(0));
 
-        idealMultiProbElem = rServeConnector.doDMultinom(n, p);
+        setMultiStats(rServeConnector.doDMultinom(n, p));
+
+        idealBinomProbElem = getBinomStats().getProb();
+        idealNBinomProbElem = getNbinomStats().getProb();
+        idealHyperProbElem = getHyperStats().getProb();
+        idealMultiProbElem = getMultiStats().getProb();
 
 
-    }
-
-    private void doAllReplacement(){
-        ProbRes prob = overAllProb;
-
-        idealBinomProbElem = rServeConnector.doDBinom("1:"+prob.getCorrectCombinationsWRep(), numTrials, prob.getProbRep());
-        idealNBinomProbElem = rServeConnector.doDNBinom("1:"+(numTrials-1),
-                1+"",
-                prob.getProbRep());
-        idealHyperProbElem = rServeConnector.doDHyper("1:"+prob.getCorrectCombinationsWRep(),
-                prob.getCorrectCombinationsWRep(),
-                prob.getTotalCombinationsWRep() - prob.getCorrectCombinationsWRep(),
-                numTrials);
-
-        ArrayList<Integer> n = new ArrayList<>();
-        ArrayList<Double> p = new ArrayList<>();
-        n.add(1);
-        n.add(0);
-        p.add((double)prob.getProbRep());
-        p.add((double)1-p.get(0));
-
-        idealMultiProbElem = rServeConnector.doDMultinom(n, p);
     }
 
     private void graphIdealProbabilitiesWRep(){
@@ -378,5 +398,37 @@ public class CardDrawSim {
 
     public double getIdealMultiProbElem() {
         return idealMultiProbElem;
+    }
+
+    public Stats getBinomStats() {
+        return binomStats;
+    }
+
+    public void setBinomStats(Stats binomStats) {
+        this.binomStats = binomStats;
+    }
+
+    public Stats getNbinomStats() {
+        return nbinomStats;
+    }
+
+    public void setNbinomStats(Stats nbinomStats) {
+        this.nbinomStats = nbinomStats;
+    }
+
+    public Stats getHyperStats() {
+        return hyperStats;
+    }
+
+    public void setHyperStats(Stats hyperStats) {
+        this.hyperStats = hyperStats;
+    }
+
+    public Stats getMultiStats() {
+        return multiStats;
+    }
+
+    public void setMultiStats(Stats multiStats) {
+        this.multiStats = multiStats;
     }
 }
