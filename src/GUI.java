@@ -15,35 +15,56 @@ public class GUI {
 
     // GUI ELEMENTS
 
+    // JPANELS
     public JPanel contentPane;
     private JPanel menuPanel;
     private JPanel trialPanel;
-    private JScrollPane resultScrollPane;
+    private JPanel valuePanel;
+    private JPanel cardPanel;
+    private JPanel runPanel;
+    private JPanel probdistPanel;
+    private JSplitPane splitPanel;
 
+    // COMBO BOXES
     private JComboBox comboBoxTrial;
     private JComboBox comboBoxCard;
+    private JComboBox comboBoxProbDist;
 
+    // LABELS
     private JLabel labelNumTrial;
     private JLabel labelNumCard;
     private JLabel labelTotalValue;
+    private JLabel labelProbDist;
 
-    private JFormattedTextField fTxtFieldTotalValue;
-
+    // BUTTONS
     private JButton buttonRun;
 
-    private JTable tableRunResult;
+    // CHECKBOXES
     private JCheckBox cboxRep;
+
+    // SPINNERS
     private JSpinner spinnerSearchValue;
+    private JTabbedPane histPanel;
+    private JPanel resultPanel;
+    private JPanel rValueChartPanel;
+    private JPanel actualVsIdealChartPanel;
+    private JPanel actualChartPanel;
+    private JPanel idealChartPanel;
+    private JLabel labelMean;
+    private JLabel labelVariance;
+    private JLabel labelStandardDev;
+    private JLabel labelCorrelation;
+    private JPanel resultValuePanel;
 
     // INPUT ATTRIBUTES
     String[] arrayTrial = {"10", "100", "1000", "10000"};
     String[] arrayCard = {"1", "2", "3", "4", "5"};
-    String[] columnNames = {"Binomial",
+    String[] arrayProbDist = {"Binomial",
             "Negative Binomial",
             "Hypergeometric",
-            "Multinomial",
-            "ACTUAL"};
+            "Multinomial"};
     int numTrials, numCards, numSearchValue;
+    String probDist;
     boolean withReplace;
     RunResultModel resultModel = new RunResultModel();
 
@@ -57,14 +78,12 @@ public class GUI {
         // COMBOBOX
         comboBoxTrial.setModel(new DefaultComboBoxModel(arrayTrial));
         comboBoxCard.setModel(new DefaultComboBoxModel(arrayCard));
+        comboBoxProbDist.setModel(new DefaultComboBoxModel(arrayProbDist));
 
         // SPINNER
         spinnerSearchValue.setValue(1);
         ((SpinnerNumberModel)spinnerSearchValue.getModel()).setMinimum(1);
         ((SpinnerNumberModel)spinnerSearchValue.getModel()).setMaximum(13*5);
-
-        // JTABLE
-        tableRunResult.setModel(resultModel);
     }
 
     private void setupListeners() {
@@ -77,6 +96,7 @@ public class GUI {
                 // Get input from combo boxes
                 numTrials = Integer.parseInt((String)comboBoxTrial.getSelectedItem());
                 numCards = Integer.parseInt((String)comboBoxCard.getSelectedItem());
+                probDist = (String)comboBoxProbDist.getSelectedItem();
 
                 // Get input from textfield - number to search
                 if(spinnerSearchValue.getValue() != null)
@@ -87,20 +107,15 @@ public class GUI {
                 CardDrawSim sim = new CardDrawSim(numTrials,numCards,numSearchValue, withReplace);
 
                 // WHERE THE COMPUTING BEGINS
+                /*
                 resultModel.computeProbabilities(numTrials, numCards, numSearchValue, withReplace);
                 resultModel.setValueAt(sim.getIdealBinomProbElem(),0,0);
                 resultModel.setValueAt(sim.getIdealNBinomProbElem(),0,1);
                 resultModel.setValueAt(sim.getIdealHyperProbElem(),0,2);
                 resultModel.setValueAt(sim.getIdealMultiProbElem(), 0, 3);
                 resultModel.setValueAt(sim.getActualProbability(), 0, 4);
+                */
             }
         });
-    }
-
-    // Change the contents of the probability row in JTable
-    private void changeProbTable(double dbinom, double dnbinom,
-                                 double dhyper, double dmultinom,
-                                 double dactual){
-
     }
 }
