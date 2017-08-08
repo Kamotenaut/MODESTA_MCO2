@@ -210,43 +210,105 @@
                   </grid>
                 </children>
               </tabbedpane>
-              <grid id="1d891" binding="resultValuePanel" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
+              <splitpane id="477fd" binding="resultSplitPanel">
                 <constraints>
-                  <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false">
-                    <minimum-size width="-1" height="35"/>
-                    <preferred-size width="-1" height="35"/>
-                    <maximum-size width="-1" height="30"/>
+                  <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="3" indent="0" use-parent-layout="false">
+                    <preferred-size width="50" height="50"/>
                   </grid>
                 </constraints>
                 <properties/>
                 <border type="none"/>
                 <children>
-                  <component id="c1472" class="javax.swing.JLabel" binding="labelMean">
-                    <constraints/>
+                  <grid id="1d891" binding="actualValuePanel" layout-manager="GridLayoutManager" row-count="3" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                    <margin top="0" left="0" bottom="0" right="0"/>
+                    <constraints>
+                      <splitpane position="left"/>
+                    </constraints>
                     <properties>
-                      <text value="Mean: "/>
+                      <maximumSize width="163" height="2147483647"/>
                     </properties>
-                  </component>
-                  <component id="8e3b" class="javax.swing.JLabel" binding="labelVariance">
-                    <constraints/>
+                    <border type="none" title="Actual"/>
+                    <children>
+                      <component id="c1472" class="javax.swing.JLabel" binding="labelAMean">
+                        <constraints>
+                          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                        </constraints>
+                        <properties>
+                          <text value="Mean: "/>
+                        </properties>
+                      </component>
+                      <component id="8e3b" class="javax.swing.JLabel" binding="labelAVar">
+                        <constraints>
+                          <grid row="1" column="0" row-span="2" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                        </constraints>
+                        <properties>
+                          <text value="Variance: "/>
+                        </properties>
+                      </component>
+                      <component id="9381" class="javax.swing.JLabel" binding="labelASD">
+                        <constraints>
+                          <grid row="0" column="1" row-span="2" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                        </constraints>
+                        <properties>
+                          <text value="SD:"/>
+                        </properties>
+                      </component>
+                      <component id="6ab35" class="javax.swing.JLabel" binding="labelACorr">
+                        <constraints>
+                          <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                        </constraints>
+                        <properties>
+                          <text value="Correlation: "/>
+                        </properties>
+                      </component>
+                    </children>
+                  </grid>
+                  <grid id="413b4" binding="idealValuePanel" layout-manager="GridLayoutManager" row-count="3" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                    <margin top="0" left="0" bottom="0" right="0"/>
+                    <constraints>
+                      <splitpane position="right"/>
+                    </constraints>
                     <properties>
-                      <text value="Variance: "/>
+                      <maximumSize width="163" height="2147483647"/>
                     </properties>
-                  </component>
-                  <component id="9381" class="javax.swing.JLabel" binding="labelStandardDev">
-                    <constraints/>
-                    <properties>
-                      <text value="Standard Deviation: "/>
-                    </properties>
-                  </component>
-                  <component id="6ab35" class="javax.swing.JLabel" binding="labelCorrelation">
-                    <constraints/>
-                    <properties>
-                      <text value="Correlation: "/>
-                    </properties>
-                  </component>
+                    <border type="none" title="Ideal"/>
+                    <children>
+                      <component id="b60ca" class="javax.swing.JLabel" binding="labelIMean">
+                        <constraints>
+                          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                        </constraints>
+                        <properties>
+                          <text value="Mean: "/>
+                        </properties>
+                      </component>
+                      <component id="86d93" class="javax.swing.JLabel" binding="labelISD">
+                        <constraints>
+                          <grid row="0" column="1" row-span="2" col-span="1" vsize-policy="3" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                        </constraints>
+                        <properties>
+                          <text value="SD:"/>
+                        </properties>
+                      </component>
+                      <component id="9c1cd" class="javax.swing.JLabel" binding="labelIVar">
+                        <constraints>
+                          <grid row="1" column="0" row-span="2" col-span="1" vsize-policy="3" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                        </constraints>
+                        <properties>
+                          <text value="Variance: "/>
+                        </properties>
+                      </component>
+                      <component id="b4762" class="javax.swing.JLabel" binding="labelICorr">
+                        <constraints>
+                          <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                        </constraints>
+                        <properties>
+                          <text value="Correlation: "/>
+                        </properties>
+                      </component>
+                    </children>
+                  </grid>
                 </children>
-              </grid>
+              </splitpane>
             </children>
           </grid>
         </children>

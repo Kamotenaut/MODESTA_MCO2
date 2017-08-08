@@ -6,8 +6,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="71c62b6a-06c2-44f0-9241-5b8e4ff8a099" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/GUI.form" afterPath="$PROJECT_DIR$/src/GUI.form" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/GUI.java" afterPath="$PROJECT_DIR$/src/GUI.java" />
     </list>
@@ -36,7 +34,7 @@
         <entry file="file://$PROJECT_DIR$/src/GUI.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="0">
-              <caret line="98" column="70" lean-forward="false" selection-start-line="98" selection-start-column="70" selection-end-line="98" selection-end-column="70" />
+              <caret line="104" column="70" lean-forward="false" selection-start-line="104" selection-start-column="70" selection-end-line="104" selection-end-column="70" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -653,7 +651,7 @@
       <workItem from="1502004995679" duration="12624000" />
       <workItem from="1502020087285" duration="1722000" />
       <workItem from="1502022418623" duration="9258000" />
-      <workItem from="1502167949444" duration="3503000" />
+      <workItem from="1502167949444" duration="4429000" />
     </task>
     <task id="LOCAL-00001" summary="Added RServeConnector">
       <created>1501942918273</created>
@@ -729,7 +727,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="78986000" />
+    <option name="totallyTimeSpent" value="79912000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="22" width="1440" height="793" extended-state="6" />
@@ -1213,7 +1211,7 @@
     <entry file="file://$PROJECT_DIR$/src/GUI.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
-          <caret line="98" column="70" lean-forward="false" selection-start-line="98" selection-start-column="70" selection-end-line="98" selection-end-column="70" />
+          <caret line="104" column="70" lean-forward="false" selection-start-line="104" selection-start-column="70" selection-end-line="104" selection-end-column="70" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>

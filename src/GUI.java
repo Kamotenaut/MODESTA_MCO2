@@ -50,11 +50,17 @@ public class GUI {
     private JPanel actualVsIdealChartPanel;
     private JPanel actualChartPanel;
     private JPanel idealChartPanel;
-    private JLabel labelMean;
-    private JLabel labelVariance;
-    private JLabel labelStandardDev;
-    private JLabel labelCorrelation;
-    private JPanel resultValuePanel;
+    private JLabel labelAMean;
+    private JLabel labelAVar;
+    private JLabel labelASD;
+    private JLabel labelACorr;
+    private JPanel actualValuePanel;
+    private JPanel idealValuePanel;
+    private JLabel labelIMean;
+    private JLabel labelIVar;
+    private JLabel labelISD;
+    private JLabel labelICorr;
+    private JSplitPane resultSplitPanel;
 
     // INPUT ATTRIBUTES
     String[] arrayTrial = {"10", "100", "1000", "10000"};
