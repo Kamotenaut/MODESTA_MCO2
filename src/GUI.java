@@ -1,11 +1,10 @@
+import javax.imageio.ImageIO;
 import javax.swing.*;
-import javax.swing.table.AbstractTableModel;
-import javax.swing.table.DefaultTableColumnModel;
-import javax.swing.text.DefaultFormatterFactory;
-import javax.swing.text.NumberFormatter;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.text.NumberFormat;
+import java.awt.*;
+import java.awt.event.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
 /**
  * Created by jasonsapdos on 04/08/2017.
@@ -61,6 +60,15 @@ public class GUI {
     private JLabel labelISD;
     private JLabel labelICorr;
     private JSplitPane resultSplitPanel;
+    //GRAPHS
+    private JLabel valueGraph;
+    private JLabel probGraph;
+    private JLabel actualvsidealGraph;
+    private JLabel actualProbGraph;
+    private JLabel idealProbGraph;
+
+
+    public String selectedTab;
 
     // INPUT ATTRIBUTES
     String[] arrayTrial = {"10", "100", "1000", "10000"};
@@ -79,6 +87,15 @@ public class GUI {
         setupListeners();
     }
 
+    protected JComponent makeTextPanel(String text) {
+        JPanel panel = new JPanel(false);
+        JLabel filler = new JLabel(text);
+        filler.setHorizontalAlignment(JLabel.CENTER);
+        panel.setLayout(new GridLayout(1, 1));
+        panel.add(filler);
+        return panel;
+    }
+
     private void createUIComponents() {
 
         // COMBOBOX
@@ -90,9 +107,89 @@ public class GUI {
         spinnerSearchValue.setValue(1);
         ((SpinnerNumberModel)spinnerSearchValue.getModel()).setMinimum(1);
         ((SpinnerNumberModel)spinnerSearchValue.getModel()).setMaximum(13*5);
+
+        // ADD TABS
+        histPanel.addTab("Result Values", rValueChartPanel);
+        histPanel.addTab("Actual Vs. Ideal", actualVsIdealChartPanel);
+        histPanel.addTab("Actual Only", actualChartPanel);
+        histPanel.addTab("Ideal Only", idealChartPanel);
+
     }
 
     private void setupListeners() {
+
+        histPanel.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+
+                String USER_DIR = System.getProperty("user.dir") + "//src//images//";
+                String dist;
+
+                int selectedTab = histPanel.getSelectedIndex();
+                switch(selectedTab){
+                    case 0:
+                        valueGraph.setIcon(new ImageIcon(getClass().getResource("images/image52.png")));
+                        valueGraph.setText("");
+                        probGraph.setIcon(new ImageIcon(getClass().getResource("images/image54.png")));
+                        probGraph.setText("");
+                        break; //results
+                    case 1:
+                        dist = (String)comboBoxProbDist.getSelectedItem();
+                        switch(dist){
+                            case "Binomial":
+                                actualvsidealGraph.setIcon(new ImageIcon(getClass().getResource("images/image48.png")));
+                                actualvsidealGraph.setText("");
+                                break;
+                            case "Negative Binomial":
+                                actualvsidealGraph.setIcon(new ImageIcon(getClass().getResource("images/image49.png")));
+                                actualvsidealGraph.setText("");
+                                break;
+                            case "Hypergeometric":
+                                actualvsidealGraph.setIcon(new ImageIcon(getClass().getResource("images/image50.png")));
+                                actualvsidealGraph.setText("");
+                                break;
+                            case "Multinomial":
+                                actualvsidealGraph.setIcon(new ImageIcon(getClass().getResource("images/image51.png")));
+                                actualvsidealGraph.setText("");
+                                break;
+                        }
+
+
+
+                        break; //actual vs ideal
+                    case 2:
+                        actualProbGraph.setIcon(new ImageIcon(getClass().getResource("images/image54.png")));
+                        actualProbGraph.setText("");
+                        break; //actual only
+
+                    case 3:
+
+                        dist = (String)comboBoxProbDist.getSelectedItem();
+                        System.out.println(dist);
+                        switch(dist){
+                            case "Binomial":
+                                idealProbGraph.setIcon(new ImageIcon(getClass().getResource("images/image55.png")));
+                                idealProbGraph.setText("");
+                                break;
+                            case "Negative Binomial":
+                                idealProbGraph.setIcon(new ImageIcon(getClass().getResource("images/image56.png")));
+                                idealProbGraph.setText("");
+                                break;
+                            case "Hypergeometric":
+                                idealProbGraph.setIcon(new ImageIcon(getClass().getResource("images/image57.png")));
+                                idealProbGraph.setText("");
+                                break;
+                            case "Multinomial":
+                                idealProbGraph.setIcon(new ImageIcon(getClass().getResource("images/image58.png")));
+                                idealProbGraph.setText("");
+                                break;
+                        }
+                        break; //ideal only
+                    default: break;
+                }
+            }
+        });
 
         // "Run" button is clicked
         buttonRun.addActionListener(new ActionListener() {
@@ -111,6 +208,8 @@ public class GUI {
                 // Get input from checkbox
                 withReplace = cboxRep.isSelected();
                 CardDrawSim sim = new CardDrawSim(numTrials,numCards,numSearchValue, withReplace);
+
+
 
                 // WHERE THE COMPUTING BEGINS
                 /*
