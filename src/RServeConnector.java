@@ -343,9 +343,9 @@ public class RServeConnector {
             System.out.println(code);
             result = connection.eval(code).asDouble();
             stats.setProb(result);
-            stats.setMean(connection.eval("round(mean(dbinom("+n+",size="+size+",prob="+prob+")),4)").asDouble());
-            stats.setVariance(connection.eval("round(var(dbinom("+n+",size="+size+",prob="+prob+")),4)").asDouble());
-            stats.setSd(connection.eval("round(sd(dbinom("+n+",size="+size+",prob="+prob+")),4)").asDouble());
+            stats.setMean(connection.eval("round(("+n+"*"+prob+"),4)").asDouble());
+            stats.setVariance(connection.eval("round(("+n+"*"+prob+"*"+(1-prob)+"),4)").asDouble());
+            stats.setSd(connection.eval("round(sqrt("+n+"*"+prob+"*"+(1-prob)+"),4)").asDouble());
 
         } catch (RserveException e) {
             e.printStackTrace();
@@ -408,9 +408,9 @@ public class RServeConnector {
             result = connection.eval(code).asDouble();
 
             stats.setProb(result);
-            stats.setMean(connection.eval("round(mean(dnbinom("+n+",size="+size+",prob="+prob+")),4)").asDouble());
-            stats.setVariance(connection.eval("round(var(dnbinom("+n+",size="+size+",prob="+prob+")),4)").asDouble());
-            stats.setSd(connection.eval("round(sd(dnbinom("+n+",size="+size+",prob="+prob+")),4)").asDouble());
+            stats.setMean(connection.eval("round(("+n+"/"+prob+"),4)").asDouble());
+            stats.setVariance(connection.eval("round(("+n+"*"+(1-prob)+")/("+prob+"^2),4)").asDouble());
+            stats.setSd(connection.eval("round(sqrt(("+n+"*"+(1-prob)+")/("+prob+"^2)),4)").asDouble());
         } catch (RserveException e) {
             e.printStackTrace();
         } catch (REXPMismatchException e) {

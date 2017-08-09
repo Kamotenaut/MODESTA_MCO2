@@ -2,12 +2,20 @@
 <project version="4">
   <component name="BookmarkManager">
     <bookmark url="file://$PROJECT_DIR$/src/RServeConnector.java" line="55" />
-    <bookmark url="file://$PROJECT_DIR$/src/RServeConnector.java" line="317" mnemonic="9" />
+    <bookmark url="file://$PROJECT_DIR$/src/RServeConnector.java" line="496" mnemonic="9" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="71c62b6a-06c2-44f0-9241-5b8e4ff8a099" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/MODESTA_MCO2/CardDrawSim.class" afterPath="$PROJECT_DIR$/out/production/MODESTA_MCO2/CardDrawSim.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/MODESTA_MCO2/GUI$1.class" afterPath="$PROJECT_DIR$/out/production/MODESTA_MCO2/GUI$1.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/MODESTA_MCO2/GUI.class" afterPath="$PROJECT_DIR$/out/production/MODESTA_MCO2/GUI.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/MODESTA_MCO2/ProbRes.class" afterPath="$PROJECT_DIR$/out/production/MODESTA_MCO2/ProbRes.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/MODESTA_MCO2/RServeConnector.class" afterPath="$PROJECT_DIR$/out/production/MODESTA_MCO2/RServeConnector.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/MODESTA_MCO2/TXTWriter.class" afterPath="$PROJECT_DIR$/out/production/MODESTA_MCO2/TXTWriter.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/GUI.form" afterPath="$PROJECT_DIR$/src/GUI.form" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/GUI.java" afterPath="$PROJECT_DIR$/src/GUI.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/RServeConnector.java" afterPath="$PROJECT_DIR$/src/RServeConnector.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -23,7 +31,7 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="GUI.form" pinned="false" current-in-tab="true">
+      <file leaf-file-name="GUI.form" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/GUI.form">
           <provider selected="true" editor-type-id="ui-designer">
             <state />
@@ -33,11 +41,55 @@
       <file leaf-file-name="GUI.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/GUI.java">
           <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="933">
+              <caret line="102" column="0" lean-forward="true" selection-start-line="102" selection-start-column="0" selection-end-line="102" selection-end-column="0" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#3340#7017#0" expanded="true" />
+                <element signature="e#7016#7017#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="log.txt" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/log.txt">
+          <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="0">
-              <caret line="104" column="70" lean-forward="false" selection-start-line="104" selection-start-column="70" selection-end-line="104" selection-end-column="70" />
+              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="value_log.txt" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/value_log.txt">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="RServeConnector.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/RServeConnector.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="167">
+              <caret line="454" column="34" lean-forward="true" selection-start-line="454" selection-start-column="34" selection-end-line="454" selection-end-column="34" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="result_log.txt" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/result_log.txt">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -81,6 +133,7 @@
       <find>hyper</find>
       <find>binom</find>
       <find>actual p</find>
+      <find>mean</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -103,9 +156,9 @@
         <option value="$PROJECT_DIR$/src/RunResultModel.java" />
         <option value="$PROJECT_DIR$/src/CardDrawSim.java" />
         <option value="$PROJECT_DIR$/src/TXTWriter.java" />
-        <option value="$PROJECT_DIR$/src/RServeConnector.java" />
         <option value="$PROJECT_DIR$/src/GUI.java" />
         <option value="$PROJECT_DIR$/src/GUI.form" />
+        <option value="$PROJECT_DIR$/src/RServeConnector.java" />
       </list>
     </option>
   </component>
@@ -651,7 +704,7 @@
       <workItem from="1502004995679" duration="12624000" />
       <workItem from="1502020087285" duration="1722000" />
       <workItem from="1502022418623" duration="9258000" />
-      <workItem from="1502167949444" duration="4429000" />
+      <workItem from="1502167949444" duration="7459000" />
     </task>
     <task id="LOCAL-00001" summary="Added RServeConnector">
       <created>1501942918273</created>
@@ -727,10 +780,10 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="79912000" />
+    <option name="totallyTimeSpent" value="82942000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="22" width="1440" height="793" extended-state="6" />
+    <frame x="0" y="22" width="1440" height="793" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -827,47 +880,13 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="jar://$PROJECT_DIR$/src/rsc/Rserve.jar!/org/rosuda/REngine/Rserve/RConnection.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="55" column="0" lean-forward="false" selection-start-line="55" selection-start-column="0" selection-end-line="55" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/RServeConnector.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="169">
-          <caret line="239" column="76" lean-forward="false" selection-start-line="239" selection-start-column="71" selection-end-line="239" selection-end-column="76" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Card.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="33" column="43" lean-forward="false" selection-start-line="33" selection-start-column="43" selection-end-line="33" selection-end-column="43" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/CardDrawSim.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-175">
           <caret line="27" column="40" lean-forward="true" selection-start-line="27" selection-start-column="40" selection-end-line="28" selection-end-column="41" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#12945#12946#0" expanded="true" />
-            <element signature="e#12985#12986#0" expanded="true" />
-            <element signature="e#13030#13031#0" expanded="true" />
-            <element signature="e#13071#13072#0" expanded="true" />
-            <element signature="e#13117#13118#0" expanded="true" />
-            <element signature="e#13159#13160#0" expanded="true" />
-            <element signature="e#13204#13205#0" expanded="true" />
-            <element signature="e#13245#13246#0" expanded="true" />
-            <element signature="e#13290#13291#0" expanded="true" />
-            <element signature="e#13331#13332#0" expanded="true" />
+            <element signature="e#18260#18261#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -892,6 +911,8 @@
           <caret line="101" column="47" lean-forward="false" selection-start-line="101" selection-start-column="47" selection-end-line="101" selection-end-column="47" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="e#3340#7017#0" expanded="true" />
+            <element signature="e#7016#7017#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -942,16 +963,7 @@
           <caret line="169" column="8" lean-forward="false" selection-start-line="169" selection-start-column="8" selection-end-line="170" selection-end-column="128" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#12945#12946#0" expanded="true" />
-            <element signature="e#12985#12986#0" expanded="true" />
-            <element signature="e#13030#13031#0" expanded="true" />
-            <element signature="e#13071#13072#0" expanded="true" />
-            <element signature="e#13117#13118#0" expanded="true" />
-            <element signature="e#13159#13160#0" expanded="true" />
-            <element signature="e#13204#13205#0" expanded="true" />
-            <element signature="e#13245#13246#0" expanded="true" />
-            <element signature="e#13290#13291#0" expanded="true" />
-            <element signature="e#13331#13332#0" expanded="true" />
+            <element signature="e#18260#18261#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -962,6 +974,8 @@
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="e#3340#7017#0" expanded="true" />
+            <element signature="e#7016#7017#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1004,16 +1018,7 @@
           <caret line="47" column="28" lean-forward="true" selection-start-line="47" selection-start-column="28" selection-end-line="47" selection-end-column="28" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#12945#12946#0" expanded="true" />
-            <element signature="e#12985#12986#0" expanded="true" />
-            <element signature="e#13030#13031#0" expanded="true" />
-            <element signature="e#13071#13072#0" expanded="true" />
-            <element signature="e#13117#13118#0" expanded="true" />
-            <element signature="e#13159#13160#0" expanded="true" />
-            <element signature="e#13204#13205#0" expanded="true" />
-            <element signature="e#13245#13246#0" expanded="true" />
-            <element signature="e#13290#13291#0" expanded="true" />
-            <element signature="e#13331#13332#0" expanded="true" />
+            <element signature="e#18260#18261#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1040,6 +1045,8 @@
           <caret line="92" column="36" lean-forward="false" selection-start-line="92" selection-start-column="36" selection-end-line="92" selection-end-column="36" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="e#3340#7017#0" expanded="true" />
+            <element signature="e#7016#7017#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1073,16 +1080,7 @@
           <caret line="0" column="7" lean-forward="true" selection-start-line="0" selection-start-column="7" selection-end-line="0" selection-end-column="7" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#12945#12946#0" expanded="true" />
-            <element signature="e#12985#12986#0" expanded="true" />
-            <element signature="e#13030#13031#0" expanded="true" />
-            <element signature="e#13071#13072#0" expanded="true" />
-            <element signature="e#13117#13118#0" expanded="true" />
-            <element signature="e#13159#13160#0" expanded="true" />
-            <element signature="e#13204#13205#0" expanded="true" />
-            <element signature="e#13245#13246#0" expanded="true" />
-            <element signature="e#13290#13291#0" expanded="true" />
-            <element signature="e#13331#13332#0" expanded="true" />
+            <element signature="e#18260#18261#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1167,32 +1165,13 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Writer.java" />
-    <entry file="file://$PROJECT_DIR$/src/RServeConnector.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="35" column="44" lean-forward="false" selection-start-line="35" selection-start-column="44" selection-end-line="35" selection-end-column="44" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/CardDrawSim.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="15">
           <caret line="199" column="11" lean-forward="false" selection-start-line="199" selection-start-column="11" selection-end-line="199" selection-end-column="11" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#12945#12946#0" expanded="true" />
-            <element signature="e#12985#12986#0" expanded="true" />
-            <element signature="e#13030#13031#0" expanded="true" />
-            <element signature="e#13071#13072#0" expanded="true" />
-            <element signature="e#13117#13118#0" expanded="true" />
-            <element signature="e#13159#13160#0" expanded="true" />
-            <element signature="e#13204#13205#0" expanded="true" />
-            <element signature="e#13245#13246#0" expanded="true" />
-            <element signature="e#13290#13291#0" expanded="true" />
-            <element signature="e#13331#13332#0" expanded="true" />
+            <element signature="e#18260#18261#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1202,25 +1181,60 @@
         <state relative-caret-position="90">
           <caret line="15" column="36" lean-forward="false" selection-start-line="15" selection-start-column="36" selection-end-line="15" selection-end-column="36" />
           <folding>
-            <element signature="n#!!doc" expanded="true" />
-            <element signature="imports" expanded="true" />
+            <element signature="n#!!doc" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/GUI.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="104" column="70" lean-forward="false" selection-start-line="104" selection-start-column="70" selection-end-line="104" selection-end-column="70" />
+        <state relative-caret-position="933">
+          <caret line="102" column="0" lean-forward="true" selection-start-line="102" selection-start-column="0" selection-end-line="102" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="e#3340#7017#0" expanded="true" />
+            <element signature="e#7016#7017#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/log.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/result_log.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/GUI.form">
       <provider selected="true" editor-type-id="ui-designer">
         <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/value_log.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/RServeConnector.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="167">
+          <caret line="454" column="34" lean-forward="true" selection-start-line="454" selection-start-column="34" selection-end-line="454" selection-end-column="34" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
       </provider>
     </entry>
   </component>

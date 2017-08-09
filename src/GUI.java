@@ -52,13 +52,11 @@ public class GUI {
     private JLabel labelAMean;
     private JLabel labelAVar;
     private JLabel labelASD;
-    private JLabel labelACorr;
     private JPanel actualValuePanel;
     private JPanel idealValuePanel;
     private JLabel labelIMean;
     private JLabel labelIVar;
     private JLabel labelISD;
-    private JLabel labelICorr;
     private JSplitPane resultSplitPanel;
     //GRAPHS
     private JLabel valueGraph;
