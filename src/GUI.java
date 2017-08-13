@@ -64,6 +64,11 @@ public class GUI {
     private JLabel actualvsidealGraph;
     private JLabel actualProbGraph;
     private JLabel idealProbGraph;
+    private JPanel controlPanel;
+    private JPanel inputInfoPanel;
+    private JLabel labelTotalCombi;
+    private JLabel labelTotalSuccess;
+    private JLabel labelSuccessProb;
 
 
     public String selectedTab;
