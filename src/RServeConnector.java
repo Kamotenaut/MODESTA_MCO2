@@ -44,6 +44,24 @@ public class RServeConnector {
         USER_DIR = USER_DIR.replace("\\", "\\\\");
     }
 
+    public int getPower(int n, int r){
+        int ans =  1;
+        connection = null;
+        try {
+            connection = new RConnection();
+            ans = connection.eval(n + "^" + r).asInteger();
+            if(r >= 5)
+                ans -= 4;
+        } catch (RserveException e) {
+            e.printStackTrace();
+        } catch (REXPMismatchException e) {
+            e.printStackTrace();
+        } finally{
+            connection.close();
+        }
+        return ans;
+    }
+
     public void graphValuesHist(ArrayList<Integer> values, String title){
         String code = values.get(0).toString();
         for(int i = 1; i < values.size(); i++){
@@ -70,7 +88,7 @@ public class RServeConnector {
             code += ("," + prob.get(i).toString());
         }
         System.out.println();
-        System.out.println("hist(c("+code+"),main='"+title+"');");
+        System.out.println("barplot(c("+code+"),main='"+title+"', ylab='Probability', xlab='Possible Total Values', col='red')");
         try {
             connection = new RConnection();
             connection.eval("try(png('" + USER_DIR +"image" + Integer.toString(imageCount)+".png'))");

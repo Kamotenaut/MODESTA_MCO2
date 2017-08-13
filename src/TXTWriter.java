@@ -10,15 +10,27 @@ public class TXTWriter
     private static String VALUE_FILE = "value_log.txt";
     private static String RESULT_FILE = "result_log.txt";
 
-    public void writeResult(String printString){
-        write(printString, RESULT_FILE);
+    private static String ALLCOMB_FILE = "all_combi.txt";
+    private static String CORRECT_FILE = "corr_combi.txt";
+
+
+    public void writeCorCombi(String printString, boolean restart){
+        write(printString, CORRECT_FILE, restart);
     }
 
-    public void writeValue(String printString){
-        write(printString, VALUE_FILE);
+    public void writeAllCombi(String printString, boolean restart){
+        write(printString, ALLCOMB_FILE,  restart);
     }
 
-    private void write(String printString, String fileName)
+    public void writeResult(String printString, boolean restart){
+        write(printString, RESULT_FILE, restart);
+    }
+
+    public void writeValue(String printString, boolean restart){
+        write(printString, VALUE_FILE, restart);
+    }
+
+    private void write(String printString, String fileName, boolean restart)
     {
         //FileWriter fileWriter = null;
         BufferedWriter fileWriter = null;
@@ -36,11 +48,14 @@ public class TXTWriter
                 //System.out.println("Checking CSV line...");
             }
 
-            fileWriter.append(printString);
-            fileWriter.newLine();
+            if(!restart) {
+                fileWriter.append(printString);
+                fileWriter.newLine();
+            }
+            else{
+                fileWriter.write("");
+            }
 
-
-            // JOptionPane.showMessageDialog(null, "Saving successful!");
         }
         catch (Exception e)
         {

@@ -123,12 +123,28 @@ public class GUI {
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
 
+                resultPanel.revalidate();
+                resultPanel.repaint();
+
+                actualChartPanel.revalidate();
+                actualChartPanel.repaint();
+
+                actualvsidealGraph.revalidate();
+                actualvsidealGraph.repaint();
+
+                idealChartPanel.revalidate();
+                idealChartPanel.revalidate();
+
                 String USER_DIR = System.getProperty("user.dir") + "//src//images//";
                 String dist;
 
                 int selectedTab = histPanel.getSelectedIndex();
                 switch(selectedTab){
                     case 0:
+                        resultPanel.removeAll();
+                        JLabel valueGraph = new JLabel();
+                        resultPanel.add(valueGraph);
+                        //resultPanel =
                         valueGraph.setIcon(new ImageIcon(getClass().getResource("images/image52.png")));
                         valueGraph.setText("");
                         probGraph.setIcon(new ImageIcon(getClass().getResource("images/image54.png")));

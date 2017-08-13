@@ -1,7 +1,0 @@
-[TESTING] The mean of given vector is=2.5
-[TESTING] The mean of given vector is=2.5
-[TESTING] The mean of given vector is=2.5
-[TESTING] The mean of given vector is=2.5
-[TESTING] The mean of given vector is=2.5
-[TESTING] The mean of given vector is=2.5
-[TESTING] The mean of given vector is=2.5

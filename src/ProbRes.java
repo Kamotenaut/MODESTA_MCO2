@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class ProbRes {
 
     private float probNoRep = 0;
@@ -7,6 +9,12 @@ public class ProbRes {
     private int totalCombinationsWORep = 0;
     private int totalCombinationsWRep = 0;
     private int desiredValue = 0;
+
+    private int allCombinationValuesWRep = 0;
+    private int allCombinationValuesWORep = 0;
+    private int correctCombinationValuesWRep = 0;
+    private int correctCombinationValuesWORep = 0;
+
 
     public ProbRes(int desiredValue){
         this.desiredValue = desiredValue;
@@ -67,5 +75,37 @@ public class ProbRes {
 
     public void setTotalCombinationsWRep(int totalCombinationsWRep) {
         this.totalCombinationsWRep = totalCombinationsWRep;
+    }
+
+    public int getAllCombinationValuesWRep() {
+        return allCombinationValuesWRep;
+    }
+
+    public void setAllCombinationValuesWRep(int allCombinationValuesWRep) {
+        this.allCombinationValuesWRep = allCombinationValuesWRep;
+    }
+
+    public int getAllCombinationValuesWORep() {
+        return allCombinationValuesWORep;
+    }
+
+    public void setAllCombinationValuesWORep(int allCombinationValuesWORep) {
+        this.allCombinationValuesWORep = allCombinationValuesWORep;
+    }
+
+    public int getCorrectCombinationValuesWRep() {
+        return correctCombinationValuesWRep;
+    }
+
+    public void setCorrectCombinationValuesWRep(int correctCombinationValuesWRep) {
+        this.correctCombinationValuesWRep = correctCombinationValuesWRep;
+    }
+
+    public int getCorrectCombinationValuesWORep() {
+        return correctCombinationValuesWORep;
+    }
+
+    public void setCorrectCombinationValuesWORep(int correctCombinationValuesWORep) {
+        this.correctCombinationValuesWORep = correctCombinationValuesWORep;
     }
 }

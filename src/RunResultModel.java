@@ -12,7 +12,7 @@ public class RunResultModel extends AbstractTableModel {
             "Negative Binomial",
             "Hypergeometric",
             "Multinomial",
-            "ACTUAL"};
+            "Actual"};
     private Object[][] data = {
             {" ", " ", " ", " ", " "}
     };
