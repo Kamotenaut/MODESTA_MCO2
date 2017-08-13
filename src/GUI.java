@@ -2,7 +2,6 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
@@ -21,19 +20,16 @@ public class GUI {
     private JPanel valuePanel;
     private JPanel cardPanel;
     private JPanel runPanel;
-    private JPanel probdistPanel;
     private JSplitPane splitPanel;
 
     // COMBO BOXES
     private JComboBox comboBoxTrial;
     private JComboBox comboBoxCard;
-    private JComboBox comboBoxProbDist;
 
     // LABELS
     private JLabel labelNumTrial;
     private JLabel labelNumCard;
     private JLabel labelTotalValue;
-    private JLabel labelProbDist;
 
     // BUTTONS
     private JButton buttonRun;
@@ -48,24 +44,31 @@ public class GUI {
     private JPanel rValueChartPanel;
     private JPanel actualVsIdealChartPanel;
     private JPanel actualChartPanel;
-    private JPanel idealChartPanel;
+    private JPanel binomChartPanel;
     private JLabel labelAMean;
     private JLabel labelAVar;
     private JLabel labelASD;
-    private JLabel labelACorr;
     private JPanel actualValuePanel;
     private JPanel idealValuePanel;
     private JLabel labelIMean;
     private JLabel labelIVar;
     private JLabel labelISD;
-    private JLabel labelICorr;
     private JSplitPane resultSplitPanel;
+
     //GRAPHS
     private JLabel valueGraph;
-    private JLabel probGraph;
     private JLabel actualvsidealGraph;
     private JLabel actualProbGraph;
-    private JLabel idealProbGraph;
+    private JLabel binomGraph;
+    private JPanel controlPanel;
+    private JPanel inputInfoPanel;
+    private JLabel labelTotalCombi;
+    private JLabel labelTotalSuccess;
+    private JLabel labelSuccessProb;
+    private JPanel nbinomChartPanel;
+    private JLabel nbinomGraph;
+    private JPanel hyperChartPanel;
+    private JLabel hyperGraph;
 
 
     public String selectedTab;
@@ -73,12 +76,7 @@ public class GUI {
     // INPUT ATTRIBUTES
     String[] arrayTrial = {"10", "100", "1000", "10000"};
     String[] arrayCard = {"1", "2", "3", "4", "5"};
-    String[] arrayProbDist = {"Binomial",
-            "Negative Binomial",
-            "Hypergeometric",
-            "Multinomial"};
     int numTrials, numCards, numSearchValue;
-    String probDist;
     boolean withReplace;
     RunResultModel resultModel = new RunResultModel();
 
@@ -101,7 +99,6 @@ public class GUI {
         // COMBOBOX
         comboBoxTrial.setModel(new DefaultComboBoxModel(arrayTrial));
         comboBoxCard.setModel(new DefaultComboBoxModel(arrayCard));
-        comboBoxProbDist.setModel(new DefaultComboBoxModel(arrayProbDist));
 
         // SPINNER
         spinnerSearchValue.setValue(1);
@@ -109,103 +106,17 @@ public class GUI {
         ((SpinnerNumberModel)spinnerSearchValue.getModel()).setMaximum(13*5);
 
         // ADD TABS
-        histPanel.addTab("Result Values", rValueChartPanel);
-        histPanel.addTab("Actual Vs. Ideal", actualVsIdealChartPanel);
-        histPanel.addTab("Actual Only", actualChartPanel);
-        histPanel.addTab("Ideal Only", idealChartPanel);
+        histPanel.addTab("Actual Values", rValueChartPanel);
+        histPanel.addTab("Actual Probabilities", actualChartPanel);
+        histPanel.addTab("Actual vs Ideal", actualVsIdealChartPanel);
+        histPanel.addTab("Binomial Distribution", binomChartPanel);
+        histPanel.addTab("N. Binomial Distribution", nbinomChartPanel);
+        histPanel.addTab("HyperGeometric Distbribution", hyperChartPanel);
+
 
     }
 
     private void setupListeners() {
-
-        histPanel.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                super.mouseClicked(e);
-
-                resultPanel.revalidate();
-                resultPanel.repaint();
-
-                actualChartPanel.revalidate();
-                actualChartPanel.repaint();
-
-                actualvsidealGraph.revalidate();
-                actualvsidealGraph.repaint();
-
-                idealChartPanel.revalidate();
-                idealChartPanel.revalidate();
-
-                String USER_DIR = System.getProperty("user.dir") + "//src//images//";
-                String dist;
-
-                int selectedTab = histPanel.getSelectedIndex();
-                switch(selectedTab){
-                    case 0:
-                        resultPanel.removeAll();
-                        JLabel valueGraph = new JLabel();
-                        resultPanel.add(valueGraph);
-                        //resultPanel =
-                        valueGraph.setIcon(new ImageIcon(getClass().getResource("images/image52.png")));
-                        valueGraph.setText("");
-                        probGraph.setIcon(new ImageIcon(getClass().getResource("images/image54.png")));
-                        probGraph.setText("");
-                        break; //results
-                    case 1:
-                        dist = (String)comboBoxProbDist.getSelectedItem();
-                        switch(dist){
-                            case "Binomial":
-                                actualvsidealGraph.setIcon(new ImageIcon(getClass().getResource("images/image48.png")));
-                                actualvsidealGraph.setText("");
-                                break;
-                            case "Negative Binomial":
-                                actualvsidealGraph.setIcon(new ImageIcon(getClass().getResource("images/image49.png")));
-                                actualvsidealGraph.setText("");
-                                break;
-                            case "Hypergeometric":
-                                actualvsidealGraph.setIcon(new ImageIcon(getClass().getResource("images/image50.png")));
-                                actualvsidealGraph.setText("");
-                                break;
-                            case "Multinomial":
-                                actualvsidealGraph.setIcon(new ImageIcon(getClass().getResource("images/image51.png")));
-                                actualvsidealGraph.setText("");
-                                break;
-                        }
-
-
-
-                        break; //actual vs ideal
-                    case 2:
-                        actualProbGraph.setIcon(new ImageIcon(getClass().getResource("images/image54.png")));
-                        actualProbGraph.setText("");
-                        break; //actual only
-
-                    case 3:
-
-                        dist = (String)comboBoxProbDist.getSelectedItem();
-                        System.out.println(dist);
-                        switch(dist){
-                            case "Binomial":
-                                idealProbGraph.setIcon(new ImageIcon(getClass().getResource("images/image55.png")));
-                                idealProbGraph.setText("");
-                                break;
-                            case "Negative Binomial":
-                                idealProbGraph.setIcon(new ImageIcon(getClass().getResource("images/image56.png")));
-                                idealProbGraph.setText("");
-                                break;
-                            case "Hypergeometric":
-                                idealProbGraph.setIcon(new ImageIcon(getClass().getResource("images/image57.png")));
-                                idealProbGraph.setText("");
-                                break;
-                            case "Multinomial":
-                                idealProbGraph.setIcon(new ImageIcon(getClass().getResource("images/image58.png")));
-                                idealProbGraph.setText("");
-                                break;
-                        }
-                        break; //ideal only
-                    default: break;
-                }
-            }
-        });
 
         // "Run" button is clicked
         buttonRun.addActionListener(new ActionListener() {
@@ -215,7 +126,6 @@ public class GUI {
                 // Get input from combo boxes
                 numTrials = Integer.parseInt((String)comboBoxTrial.getSelectedItem());
                 numCards = Integer.parseInt((String)comboBoxCard.getSelectedItem());
-                probDist = (String)comboBoxProbDist.getSelectedItem();
 
                 // Get input from textfield - number to search
                 if(spinnerSearchValue.getValue() != null)
@@ -225,18 +135,102 @@ public class GUI {
                 withReplace = cboxRep.isSelected();
                 CardDrawSim sim = new CardDrawSim(numTrials,numCards,numSearchValue, withReplace);
 
+                if(withReplace) {
+                    labelTotalCombi.setText("Total Number of Combinations: " + sim.getOverAllProb().getTotalCombinationsWRep());
+                    labelTotalSuccess.setText("Total Number of Success Combinations: " + sim.getOverAllProb().getCorrectCombinationsWRep());
+                    labelSuccessProb.setText("Probability of Success: " + sim.getOverAllProb().getProbRep());
+                }
+                else {
+                    labelTotalCombi.setText("Total Number of Combinations: " + sim.getOverAllProb().getTotalCombinationsWORep());
+                    labelTotalSuccess.setText("Total Number of Success Combinations: " + sim.getOverAllProb().getCorrectCombinationsWORep());
+                    labelSuccessProb.setText("Probability of Success: " + sim.getOverAllProb().getProbNoRep());
+                }
+
+                resultPanel.revalidate();
+                resultPanel.repaint();
+                setGraphs();
+                contentPane.revalidate();
+                contentPane.repaint();
 
 
-                // WHERE THE COMPUTING BEGINS
-                /*
-                resultModel.computeProbabilities(numTrials, numCards, numSearchValue, withReplace);
-                resultModel.setValueAt(sim.getIdealBinomProbElem(),0,0);
-                resultModel.setValueAt(sim.getIdealNBinomProbElem(),0,1);
-                resultModel.setValueAt(sim.getIdealHyperProbElem(),0,2);
-                resultModel.setValueAt(sim.getIdealMultiProbElem(), 0, 3);
-                resultModel.setValueAt(sim.getActualProbability(), 0, 4);
-                */
+
             }
         });
+    }
+
+    private void setGraphs(){
+        String USER_DIR = System.getProperty("user.dir") + "\\src\\images\\";
+
+        //USER_DIR = "C:/Users/Ronnie Nieva/Documents/Dydy/Eclipse Projects/MODESTA_MCO2/src/images/";
+
+        //File file = new File(USER_DIR + "actualres_hist.png");
+        //System.out.println(file.exists());
+
+        File file = new File(USER_DIR + "actualres_hist.png");
+        System.out.println(USER_DIR);
+        System.out.println(file.exists());
+
+        try {
+            valueGraph.setText("");
+            valueGraph.setIcon(new ImageIcon(ImageIO.read( new File(USER_DIR + "actualres_hist.png") )));
+            actualProbGraph.setText("");
+            actualProbGraph.setIcon(new ImageIcon(ImageIO.read( new File(USER_DIR+"actualprob_hist.png"))));
+            actualvsidealGraph.setText("");
+            actualvsidealGraph.setIcon(new ImageIcon(ImageIO.read( new File(USER_DIR+"actualvsideal.png"))));
+
+            if(!withReplace) {
+                binomGraph.setText("Binomial Distribution is not possible for Drawing without Replacement");
+                binomGraph.setIcon(null);
+                nbinomGraph.setText("Neg. Binomial Distribution is not possible for Drawing without Replacement");
+                nbinomGraph.setIcon(null);
+                hyperGraph.setIcon(new ImageIcon(ImageIO.read( new File(USER_DIR+"hyper_graph.png"))));
+                hyperGraph.setText("");
+            }
+            else {
+                hyperGraph.setText("Hypergeometric Distribution is only possible for Drawing without Replacement");
+                hyperGraph.setIcon(null);
+                binomGraph.setIcon(new ImageIcon(ImageIO.read( new File(USER_DIR+"dbinom_graph.png"))));
+                binomGraph.setText("");
+
+                nbinomGraph.setIcon(new ImageIcon(ImageIO.read( new File(USER_DIR+"dnbinom_graph.png"))));
+                nbinomGraph.setText("");
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+
+
+
+
+
+
+        valueGraph.revalidate();
+        valueGraph.repaint();
+        rValueChartPanel.revalidate();
+        rValueChartPanel.repaint();
+        actualProbGraph.revalidate();
+        actualProbGraph.repaint();
+        actualChartPanel.revalidate();
+        actualChartPanel.repaint();
+        actualvsidealGraph.revalidate();
+        actualvsidealGraph.repaint();
+        actualVsIdealChartPanel.revalidate();
+        actualVsIdealChartPanel.repaint();
+        binomGraph.revalidate();
+        binomGraph.repaint();
+        binomChartPanel.revalidate();
+        binomChartPanel.repaint();
+        nbinomGraph.revalidate();
+        nbinomGraph.repaint();
+        nbinomChartPanel.revalidate();
+        nbinomChartPanel.repaint();
+        hyperGraph.revalidate();
+        hyperGraph.repaint();
+        hyperChartPanel.revalidate();
+        hyperChartPanel.repaint();
+
     }
 }

@@ -62,7 +62,7 @@ public class RServeConnector {
         return ans;
     }
 
-    public void graphValuesHist(ArrayList<Integer> values, String title){
+    public void graphValuesHist(ArrayList<Integer> values, String title, String fileName){
         String code = values.get(0).toString();
         for(int i = 1; i < values.size(); i++){
             code += ("," + values.get(i).toString());
@@ -71,7 +71,7 @@ public class RServeConnector {
         System.out.println("hist(c("+code+"),main='"+title+"');");
         try {
             connection = new RConnection();
-            connection.eval("try(png('" + USER_DIR +"image" + Integer.toString(imageCount)+".png'))");
+            connection.eval("try(png('" + USER_DIR + fileName +".png'))");
             connection.eval("hist(c("+code+"),main='"+title+"',ylab='Frequency', xlab='Possible Total Values', col='red')");
             connection.eval("dev.off()");
         } catch (RserveException e) {
@@ -82,7 +82,7 @@ public class RServeConnector {
         imageCount++;
     }
 
-    public void graphProbHist(ArrayList<Double> prob, String title){
+    public void graphProbHist(ArrayList<Double> prob, String title, String fileName){
         String code = prob.get(0).toString();
         for(int i = 1; i < prob.size(); i++){
             code += ("," + prob.get(i).toString());
@@ -91,7 +91,7 @@ public class RServeConnector {
         System.out.println("barplot(c("+code+"),main='"+title+"', ylab='Probability', xlab='Possible Total Values', col='red')");
         try {
             connection = new RConnection();
-            connection.eval("try(png('" + USER_DIR +"image" + Integer.toString(imageCount)+".png'))");
+            connection.eval("try(png('" + USER_DIR + fileName +".png'))");
             connection.eval("barplot(c("+code+"),main='"+title+"',ylab='Probability', xlab='Possible Total Values', col='red')");
             connection.eval("dev.off()");
         } catch (RserveException e) {
@@ -102,7 +102,7 @@ public class RServeConnector {
         imageCount++;
     }
 
-    public void graphValuesScatterPlot(ArrayList<Integer> values, String title){
+    public void graphValuesScatterPlot(ArrayList<Integer> values, String title, String fileName){
         connection = null;
         String code = values.get(0).toString();
         for(int i = 1; i < values.size(); i++){
@@ -112,7 +112,7 @@ public class RServeConnector {
         System.out.println("hist(c("+code+"),main='"+title+"');");
         try {
             connection = new RConnection();
-            connection.eval("try(png('" + USER_DIR +"image" + Integer.toString(imageCount)+".png'))");
+            connection.eval("try(png('" + USER_DIR + fileName +".png'))");
             connection.eval("plot(c("+code+"),main='"+title+"',ylab='Total Value', xlab='Trial Number', col='blue')");
             connection.eval("dev.off()");
         } catch (RserveException e) {
@@ -123,7 +123,7 @@ public class RServeConnector {
         imageCount++;
     }
 
-    public void graphProbScatterPlot(ArrayList<Double> values, String title){
+    public void graphProbScatterPlot(ArrayList<Double> values, String title, String fileName){
         connection = null;
         String code = values.get(0).toString();
         for(int i = 1; i < values.size(); i++){
@@ -133,7 +133,7 @@ public class RServeConnector {
         System.out.println("hist(c("+code+"),main='"+title+"');");
         try {
             connection = new RConnection();
-            connection.eval("try(png('" + USER_DIR +"image" + Integer.toString(imageCount)+".png'))");
+            connection.eval("try(png('" + USER_DIR + fileName +".png'))");
             connection.eval("plot(c("+code+"),main='"+title+"',ylab='Probability', xlab='Frequency', col='green')");
             connection.eval("dev.off()");
         } catch (RserveException e) {
@@ -145,7 +145,7 @@ public class RServeConnector {
     }
 
 
-    public void graphValuesLineGraph(ArrayList<Integer> values, String title){
+    public void graphValuesLineGraph(ArrayList<Integer> values, String title, String fileName){
         connection = null;
         String code = values.get(0).toString();
         for(int i = 1; i < values.size(); i++){
@@ -155,7 +155,7 @@ public class RServeConnector {
         System.out.println("plot(c("+code+"),main='"+title+"');");
         try {
             connection = new RConnection();
-            connection.eval("try(png('" + USER_DIR +"image" + Integer.toString(imageCount)+".png'))");
+            connection.eval("try(png('" + USER_DIR + fileName +".png'))");
             connection.eval("plot(c("+code+"),main='"+title+"',ylab='Probability', xlab='Frequency',type='o'))");
             connection.eval("dev.off()");
         } catch (RserveException e) {
@@ -166,7 +166,7 @@ public class RServeConnector {
         imageCount++;
     }
 
-    public void graphProbLineGraph(ArrayList<Double> values, String title){
+    public void graphProbLineGraph(ArrayList<Double> values, String title, String fileName){
         connection = null;
         String code = values.get(0).toString();
         for(int i = 1; i < values.size(); i++){
@@ -176,7 +176,7 @@ public class RServeConnector {
         System.out.println("plot(c("+code+"),main='"+title+"');");
         try {
             connection = new RConnection();
-            connection.eval("try(png('" + USER_DIR +"image" + Integer.toString(imageCount)+".png'))");
+            connection.eval("try(png('" + USER_DIR + fileName +".png'))");
             connection.eval("plot(c("+code+"),main='"+title+"',ylab='Probability', xlab='Frequency',type='o'))");
             connection.eval("dev.off()");
         } catch (RserveException e) {
@@ -187,7 +187,7 @@ public class RServeConnector {
         imageCount++;
     }
 
-    public void graphDBinom(String n, String size, Double prob){
+    public void graphDBinom(String n, String size, Double prob, String fileName){
         connection = null;
 
         String title = "Ideal Binomial Distribution";
@@ -197,7 +197,7 @@ public class RServeConnector {
         System.out.println(graph);
         try {
             connection = new RConnection();
-            connection.eval("try(png('" + USER_DIR +"image" + Integer.toString(imageCount)+".png'))");
+            connection.eval("try(png('" + USER_DIR + fileName +".png'))");
             connection.eval(graph);
             connection.eval("dev.off()");
         } catch (RserveException e) {
@@ -208,7 +208,7 @@ public class RServeConnector {
         imageCount++;
     }
 
-    public void graphDNBinom(String n, String size, Double prob){
+    public void graphDNBinom(String n, String size, Double prob, String fileName){
         connection = null;
 
         String title = "Ideal Neg. Binomial Distribution";
@@ -218,7 +218,7 @@ public class RServeConnector {
         System.out.println(graph);
         try {
             connection = new RConnection();
-            connection.eval("try(png('" + USER_DIR +"image" + Integer.toString(imageCount)+".png'))");
+            connection.eval("try(png('" + USER_DIR + fileName +".png'))");
             connection.eval(graph);
             connection.eval("dev.off()");
         } catch (RserveException e) {
@@ -229,7 +229,7 @@ public class RServeConnector {
         imageCount++;
     }
 
-    public void graphDHyper(String x, String m, String n, String k){
+    public void graphDHyper(String x, String m, String n, String k, String fileName){
         connection = null;
 
         String title = "Ideal Hypergeometric Distribution";
@@ -239,7 +239,7 @@ public class RServeConnector {
         System.out.println(graph);
         try {
             connection = new RConnection();
-            connection.eval("try(png('" + USER_DIR +"image" + Integer.toString(imageCount)+".png'))");
+            connection.eval("try(png('" + USER_DIR + fileName +".png'))");
             connection.eval(graph);
             connection.eval("dev.off()");
         } catch (RserveException e) {
@@ -250,7 +250,7 @@ public class RServeConnector {
         imageCount++;
     }
 
-    public void graphDMultinom(ArrayList<Integer> x, ArrayList<Double> prob, int numTrials){
+    public void graphDMultinom(ArrayList<Integer> x, ArrayList<Double> prob, int numTrials, String fileName){
         connection = null;
 
         String xString = x.get(0).toString();
@@ -269,7 +269,7 @@ public class RServeConnector {
         System.out.println(graph);
         try {
             connection = new RConnection();
-            connection.eval("try(png('" + USER_DIR +"image" + Integer.toString(imageCount)+".png'))");
+            connection.eval("try(png('" + USER_DIR + fileName +".png'))");
             connection.eval(graph);
             connection.eval("dev.off()");
         } catch (RserveException e) {
@@ -361,9 +361,9 @@ public class RServeConnector {
             System.out.println(code);
             result = connection.eval(code).asDouble();
             stats.setProb(result);
-            stats.setMean(connection.eval("round(mean(dbinom("+n+",size="+size+",prob="+prob+")),4)").asDouble());
-            stats.setVariance(connection.eval("round(var(dbinom("+n+",size="+size+",prob="+prob+")),4)").asDouble());
-            stats.setSd(connection.eval("round(sd(dbinom("+n+",size="+size+",prob="+prob+")),4)").asDouble());
+            stats.setMean(connection.eval("round(("+n+"*"+prob+"),4)").asDouble());
+            stats.setVariance(connection.eval("round(("+n+"*"+prob+"*"+(1-prob)+"),4)").asDouble());
+            stats.setSd(connection.eval("round(sqrt("+n+"*"+prob+"*"+(1-prob)+"),4)").asDouble());
 
         } catch (RserveException e) {
             e.printStackTrace();
@@ -426,9 +426,9 @@ public class RServeConnector {
             result = connection.eval(code).asDouble();
 
             stats.setProb(result);
-            stats.setMean(connection.eval("round(mean(dnbinom("+n+",size="+size+",prob="+prob+")),4)").asDouble());
-            stats.setVariance(connection.eval("round(var(dnbinom("+n+",size="+size+",prob="+prob+")),4)").asDouble());
-            stats.setSd(connection.eval("round(sd(dnbinom("+n+",size="+size+",prob="+prob+")),4)").asDouble());
+            stats.setMean(connection.eval("round(("+n+"/"+prob+"),4)").asDouble());
+            stats.setVariance(connection.eval("round(("+n+"*"+(1-prob)+")/("+prob+"^2),4)").asDouble());
+            stats.setSd(connection.eval("round(sqrt(("+n+"*"+(1-prob)+")/("+prob+"^2)),4)").asDouble());
         } catch (RserveException e) {
             e.printStackTrace();
         } catch (REXPMismatchException e) {
@@ -541,14 +541,14 @@ public class RServeConnector {
         imageCount++;
         return stats;
     }
-    public void graphActualVsIdeal(double actual, double ideal, String title, String ylab, String xlab){
+    public void graphActualVsIdeal(double actual, double ideal, String title, String ylab, String xlab, String fileName){
         String graph =  "barplot(c(" + actual + "," + ideal + "), main='" + title + "', beside = TRUE, ylim = c(0, 1), names.arg = c(\"Actual\", \"Ideal\"), col=rainbow(2, 0.5))";
 
         System.out.println();
         System.out.println(graph);
         try {
             connection = new RConnection();
-            connection.eval("try(png('" + USER_DIR +"image" + Integer.toString(imageCount)+".png'))");
+            connection.eval("try(png('" + USER_DIR + fileName +".png'))");
             connection.eval(graph);
             connection.eval("dev.off()");
         } catch (RserveException e) {

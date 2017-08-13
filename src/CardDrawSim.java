@@ -49,7 +49,7 @@ public class CardDrawSim {
         this.numCards = numCards;
         this.userValue = userValue;
 
-        overAllProb = new ProbRes(userValue);
+        setOverAllProb(new ProbRes(userValue));
         perTriWRepProb = new ArrayList<>();
         perTriWORepProb = new ArrayList<>();
 
@@ -63,10 +63,10 @@ public class CardDrawSim {
             combiforDuplicates = rServeConnector.doCombinationsRep(4, numCards);
 
         // Print all combinations & get all correct combinations out of all of them.
-        printCombination(13, numCards, overAllProb);
+        printCombination(13, numCards, getOverAllProb());
 
         //Get Probability of Getting any correct values in a deck
-        getProbabilityOfValue(overAllProb);
+        getProbabilityOfValue(getOverAllProb());
 
         writer.writeResult("", true);
         writer.writeValue("", true);
@@ -88,10 +88,10 @@ public class CardDrawSim {
             currTrial++;
         }
 
-        writer.writeResult("Total Possible Combinations with Replacement: " + overAllProb.getTotalCombinationsWRep(), false);
-        writer.writeResult("Total Possible Combinations without Replacement: " + overAllProb.getTotalCombinationsWORep(), false);
-        writer.writeResult("Num of Correct Combinations of Value with Replacement: " + overAllProb.getCorrectCombinationsWRep(), false);
-        writer.writeResult("Num of Correct Combinations of Value without Replacement: " + overAllProb.getCorrectCombinationsWORep(), false);
+        writer.writeResult("Total Possible Combinations with Replacement: " + getOverAllProb().getTotalCombinationsWRep(), false);
+        writer.writeResult("Total Possible Combinations without Replacement: " + getOverAllProb().getTotalCombinationsWORep(), false);
+        writer.writeResult("Num of Correct Combinations of Value with Replacement: " + getOverAllProb().getCorrectCombinationsWRep(), false);
+        writer.writeResult("Num of Correct Combinations of Value without Replacement: " + getOverAllProb().getCorrectCombinationsWORep(), false);
         writer.writeResult("Num of correct trials: " + corGuess+"\n", false);
         actualProbability = (float)corGuess / (float)numTrials;
         writer.writeResult("Actual Probability of Experiment: " + actualProbability+"\n", false);
@@ -148,7 +148,7 @@ public class CardDrawSim {
     }
 
     private void doAllNoReplacement(){
-        ProbRes prob = overAllProb;
+        ProbRes prob = getOverAllProb();
         setHyperStats(rServeConnector.doDHyper("1:"+prob.getCorrectCombinationsWORep(),
                 prob.getCorrectCombinationsWORep(),
                 prob.getTotalCombinationsWORep() - prob.getCorrectCombinationsWORep(),
@@ -157,14 +157,14 @@ public class CardDrawSim {
         idealHyperProbElem = getHyperStats().getProb();
 
         writer.writeResult("Ideal Probability: \n ", false);
-        writer.writeResult("Probability of any of the correct combination without Replacement: " + overAllProb.getProbNoRep(), false);
+        writer.writeResult("Probability of any of the correct combination without Replacement: " + getOverAllProb().getProbNoRep(), false);
         writer.writeResult("Hypergeometric Distribution: " + getIdealHyperProbElem(), false);
         writer.writeResult("          Mean: " + hyperStats.getMean() + " || Variance: " + hyperStats.getVariance() + " || SD: " + hyperStats.getSd(), false);
 
     }
 
     private void doAllReplacement(){
-        ProbRes prob = overAllProb;
+        ProbRes prob = getOverAllProb();
 
         setBinomStats(rServeConnector.doDBinom("1:"+prob.getCorrectCombinationsWRep(), numTrials, prob.getProbRep()));
         setNbinomStats(rServeConnector.doDNBinom("1:"+(numTrials-1),
@@ -175,7 +175,7 @@ public class CardDrawSim {
         idealNBinomProbElem = getNbinomStats().getProb();
 
         writer.writeResult("Ideal Probability: \n ", false);
-        writer.writeResult("Probability of any of the correct combination with Replacement: " + overAllProb.getProbRep(), false);
+        writer.writeResult("Probability of any of the correct combination with Replacement: " + getOverAllProb().getProbRep(), false);
         writer.writeResult("Binomial Distribution: " + getIdealBinomProbElem(), false);
         writer.writeResult("          Mean: " + binomStats.getMean() + " || Variance: " + binomStats.getVariance() + " || SD: " + binomStats.getSd(), false);
         writer.writeResult("Neg. Binomial Distribution: " + getIdealNBinomProbElem(), false);
@@ -184,29 +184,30 @@ public class CardDrawSim {
     }
 
     private void graphIdealProbabilitiesWRep(){
-        ProbRes prob = overAllProb;
-        rServeConnector.graphDBinom("0:"+numTrials, ""+numTrials, (double)prob.getProbRep());
-        rServeConnector.graphDNBinom("1:"+(numTrials-1), 1+"", (double)prob.getProbRep());
+        ProbRes prob = getOverAllProb();
+        rServeConnector.graphDBinom("0:"+numTrials, ""+numTrials, (double)prob.getProbRep(), "dbinom_graph");
+        rServeConnector.graphDNBinom("1:"+(numTrials-1), 1+"", (double)prob.getProbRep(), "dnbinom_graph");
 
     }
 
     private void graphIdealProbabilitiesWORep(){
-        ProbRes prob = overAllProb;
+        ProbRes prob = getOverAllProb();
         rServeConnector.graphDHyper("1:"+prob.getCorrectCombinationsWORep(),
                 ""+prob.getCorrectCombinationsWORep(),
                 ""+ (prob.getTotalCombinationsWORep()-prob.getCorrectCombinationsWORep()),
-                numTrials+"");
+                numTrials+"",
+                "hyper_graph");
     }
 
     private void graphAllNoRep(){
-        rServeConnector.graphValuesHist(cardHandNoRepValues,"Histogram of Actual Results (No Repetitions)");
-        rServeConnector.graphValuesScatterPlot(cardHandNoRepValues,"Scatterplot of Actual Results (No Repetitions)" );
+        rServeConnector.graphValuesHist(cardHandNoRepValues,"Histogram of Actual Results (No Repetitions)", "actualres_hist");
+        rServeConnector.graphValuesScatterPlot(cardHandNoRepValues,"Scatterplot of Actual Results (No Repetitions)", "actualres_plot");
         //rServeConnector.graphValuesLineGraph(cardHandNoRepValues,"Line Graph of Actual Results (No Repetitions)" );
     }
 
     private void graphAllRep(){
-        rServeConnector.graphValuesHist(cardHandRepValues,"Histogram of Actual Results (Repetitions)");
-        rServeConnector.graphValuesScatterPlot(cardHandRepValues,"Scatterplot of Actual Results (Repetitions)" );
+        rServeConnector.graphValuesHist(cardHandRepValues,"Histogram of Actual Results (Repetitions)", "actualres_hist");
+        rServeConnector.graphValuesScatterPlot(cardHandRepValues,"Scatterplot of Actual Results (Repetitions)", "actualres_plot");
      //   rServeConnector.graphValuesLineGraph(cardHandRepValues,"Line Graph of Actual Results (Repetitions)" );
     }
 
@@ -217,7 +218,7 @@ public class CardDrawSim {
         }
         System.out.println("Actual Probability of Actual Values: " + probsWORep);
 
-        rServeConnector.graphProbHist(probsWORep,"Histogram of Actual Probabilities (No Repetitions)");
+        rServeConnector.graphProbHist(probsWORep,"Histogram of Actual Probabilities (No Repetitions)", "actualprob_hist");
 
     }
 
@@ -228,20 +229,22 @@ public class CardDrawSim {
         }
 
         System.out.println("Actual Probability of Actual Values: " + probsWRep);
-        rServeConnector.graphProbHist(probsWRep,"Histogram of Actual Probabilities (Repetitions)");
+        rServeConnector.graphProbHist(probsWRep,"Histogram of Actual Probabilities (Repetitions)", "actualprob_hist");
     }
 
     private void graphActualVsIdeal() {
         if (withReplacement){
-            rServeConnector.graphActualVsIdeal(actualProbability, overAllProb.getProbRep(), "Actual vs Ideal Probability of Success W Repetition", "Probability", "");
+            rServeConnector.graphActualVsIdeal(actualProbability, getOverAllProb().getProbRep(), "Actual vs Ideal Probability of Success W Repetition",
+                    "Probability", "","actualvsideal");
             rServeConnector.graphActualVsIdeal(actualProbability, idealBinomProbElem, "Actual Probability vs Ideal Binomial Distribution",
-                    "Probability", "");
+                    "Probability", "", "actualvsideal_binom");
             rServeConnector.graphActualVsIdeal(actualProbability, idealNBinomProbElem, "Actual Probability vs Ideal Neg. Binomial Distribution",
-                    "Probability", "");
+                    "Probability", "","actualvsideal_nbinom");
         }else {
-            rServeConnector.graphActualVsIdeal(actualProbability, overAllProb.getProbNoRep(), "Actual vs Ideal Probability of Success WO Repetition", "Probability", "");
+            rServeConnector.graphActualVsIdeal(actualProbability, getOverAllProb().getProbNoRep(), "Actual vs Ideal Probability of Success WO Repetition",
+                    "Probability", "", "actualvsideal");
             rServeConnector.graphActualVsIdeal(actualProbability, idealHyperProbElem, "Actual Probability vs Ideal HyperGeometric Distribution",
-                    "Probability", "");
+                    "Probability", "", "actualvsideal_hyper");
         }
     }
 
@@ -250,7 +253,7 @@ public class CardDrawSim {
         prob.setProbNoRep( ((float)1/(float)(prob.getTotalCombinationsWORep())) * (float)prob.getCorrectCombinationsWORep() );
         prob.setProbRep( ((float)1/(float)(prob.getTotalCombinationsWRep())) * (float)prob.getCorrectCombinationsWRep() );
 
-        if(prob != overAllProb)
+        if(prob != getOverAllProb())
             return;
 
         System.out.println("Correct Combination wo Rep: " + prob.getCorrectCombinationsWORep());
@@ -324,7 +327,7 @@ public class CardDrawSim {
 
 
             if(sum == prob.getDesiredValue()){
-                if(prob == overAllProb)
+                if(prob == getOverAllProb())
                 System.out.println(combi + " | " + hasSameSuit + " | " + sameNumCtr);
                 if(!hasSameSuit){
                     prob.setCorrectCombinationsWRep(prob.getCorrectCombinationsWRep() + combiforNoDuplicates);
@@ -415,5 +418,13 @@ public class CardDrawSim {
 
     public void setMultiStats(Stats multiStats) {
         this.multiStats = multiStats;
+    }
+
+    public ProbRes getOverAllProb() {
+        return overAllProb;
+    }
+
+    public void setOverAllProb(ProbRes overAllProb) {
+        this.overAllProb = overAllProb;
     }
 }
