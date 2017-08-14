@@ -467,13 +467,17 @@ public class RServeConnector {
         double result = 0;
         try {
             connection = new RConnection();
+            // x, m, n, k
             String code = "round(sum(dhyper(" + n + ","+ success + ","+ failure +"," + size + ")),4)";
             System.out.println(code);
             result = connection.eval(code).asDouble();
             stats.setProb(result);
-            stats.setMean(connection.eval("round(mean(dhyper(" + n + ","+ success + ","+ failure +"," + size + ")),4)").asDouble());
-            stats.setVariance(connection.eval("round(var(dhyper(" + n + ","+ success + ","+ failure +"," + size + ")),4)").asDouble());
-            stats.setSd(connection.eval("round(sd(dhyper(" + n + ","+ success + ","+ failure +"," + size + ")),4)").asDouble());
+            stats.setMean(connection.eval("round("+size+" * ("+success+"/" + (success + failure) + "),4)").asDouble());
+            // 𝑘 ∗𝑚 ∗ 𝑛 ∗ (𝑛+𝑚−𝑘)/[(𝑛+𝑚)2 ∗ (𝑛+𝑚 − 1)]
+            stats.setVariance(connection.eval("round(" + (size * success * failure) * (success * failure - size) /
+                    (((success + failure) * (success + failure)) * (success + failure - 1)) + "),4)").asDouble());
+            stats.setSd(connection.eval("round(sqrt(" + (size * success * failure) * (success * failure - size) /
+                    (((success + failure) * (success + failure)) * (success + failure - 1)) + "),4)").asDouble());
         } catch (RserveException e) {
             e.printStackTrace();
         } catch (REXPMismatchException e) {

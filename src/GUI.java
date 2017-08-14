@@ -45,10 +45,6 @@ public class GUI {
     private JPanel actualVsIdealChartPanel;
     private JPanel actualChartPanel;
     private JPanel binomChartPanel;
-    private JLabel labelAMean;
-    private JLabel labelAVar;
-    private JLabel labelASD;
-    private JPanel actualValuePanel;
     private JPanel idealValuePanel;
     private JLabel labelIMean;
     private JLabel labelIVar;
@@ -152,14 +148,17 @@ public class GUI {
                 contentPane.revalidate();
                 contentPane.repaint();
 
-
-
             }
         });
     }
 
     private void setGraphs(){
-        String USER_DIR = System.getProperty("user.dir") + "\\src\\images\\";
+
+        // Jason
+        String USER_DIR = System.getProperty("user.dir") + "/src/images/";
+
+        // Dyan & Brandon
+        //String USER_DIR = System.getProperty("user.dir") + "\\src\\images\\";
 
         //USER_DIR = "C:/Users/Ronnie Nieva/Documents/Dydy/Eclipse Projects/MODESTA_MCO2/src/images/";
 
@@ -199,12 +198,6 @@ public class GUI {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-
-
-
-
-
 
 
         valueGraph.revalidate();
