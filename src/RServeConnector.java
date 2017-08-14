@@ -475,7 +475,7 @@ public class RServeConnector {
             stats.setMean(connection.eval("round("+size+" * ("+success+"/" + (success + failure) + "),4)").asDouble());
             // 𝑘 ∗𝑚 ∗ 𝑛 ∗ (𝑛+𝑚−𝑘)/[(𝑛+𝑚)2 ∗ (𝑛+𝑚 − 1)]
             stats.setVariance(connection.eval("round(" + (size * success * failure) * (success * failure - size) /
-                    (((success + failure) * (success + failure)) * (success + failure - 1)) + "),4)").asDouble());
+                    (((success + failure) * (success + failure)) * (success + failure - 1)) + ",4)").asDouble());
             stats.setSd(connection.eval("round(sqrt(" + (size * success * failure) * (success * failure - size) /
                     (((success + failure) * (success + failure)) * (success + failure - 1)) + "),4)").asDouble());
         } catch (RserveException e) {

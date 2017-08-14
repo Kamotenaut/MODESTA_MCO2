@@ -45,11 +45,6 @@ public class GUI {
     private JPanel actualVsIdealChartPanel;
     private JPanel actualChartPanel;
     private JPanel binomChartPanel;
-    private JPanel idealValuePanel;
-    private JLabel labelIMean;
-    private JLabel labelIVar;
-    private JLabel labelISD;
-    private JSplitPane resultSplitPanel;
 
     //GRAPHS
     private JLabel valueGraph;
